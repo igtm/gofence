@@ -79,7 +79,11 @@ func execute(in io.Reader, fence geofence.GeoFence, w int) *sync.WaitGroup {
 					fmt.Println(err)
 					continue
 				}
-				query := geo.GeojsonFeatureAdapter(gj)
+				query, err := geo.GeojsonFeatureAdapter(gj)
+				if err != nil {
+					fmt.Println(err)
+					continue
+				}
 				matchs := fence.Get(query.Geometry[0].Head()) // it's a point
 				fences := make([]map[string]interface{}, len(matchs))
 				for i, match := range matchs {

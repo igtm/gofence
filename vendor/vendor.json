@@ -3,37 +3,67 @@
 	"ignore": "test",
 	"package": [
 		{
-			"path": "github.com/buckhx/diglet/geo/tile_system",
-			"revision": "bca10df3cd9dd6bec703f436ffc4b0f82b106cac",
-			"revisionTime": "2016-03-17T00:31:36Z"
-		},
-		{
+			"checksumSHA1": "emeNNNycZTfOi4hoWGzJqtcyGr4=",
+			"origin": "github.com/buckhx/gofence/vendor/github.com/buckhx/diglet/util",
 			"path": "github.com/buckhx/diglet/util",
-			"revision": "bca10df3cd9dd6bec703f436ffc4b0f82b106cac",
-			"revisionTime": "2016-03-17T00:31:36Z"
+			"revision": "21730432b1ab0a4c4979b7c4ab85eab051d4d870",
+			"revisionTime": "2016-03-17T21:50:53Z"
 		},
 		{
+			"checksumSHA1": "Zst2c2RVstJCBS+IOo5UDkG7EKM=",
+			"path": "github.com/buckhx/gofence/lib",
+			"revision": "38c40f2d7cfda08df240fd224676e4b9924559c3",
+			"revisionTime": "2016-03-17T15:23:41-04:00"
+		},
+		{
+			"checksumSHA1": "QOnGPb/1r8wb9gyJC6+xWgGT6YU=",
+			"origin": "github.com/buckhx/gofence/vendor/github.com/buckhx/rtreego",
 			"path": "github.com/buckhx/rtreego",
 			"revision": "1d24a50fd6ea181447983dbde9e16a984e17946a",
 			"revisionTime": "2016-03-17T00:32:18Z"
 		},
 		{
+			"checksumSHA1": "BLBx9HSRPH8EPHHFEnBErhC8QfU=",
+			"origin": "github.com/buckhx/gofence/vendor/github.com/codegangsta/cli",
 			"path": "github.com/codegangsta/cli",
 			"revision": "aca5b047ed14d17224157c3434ea93bf6cdaadee",
 			"revisionTime": "2016-03-06T20:12:29-08:00"
 		},
 		{
+			"checksumSHA1": "3BdelHTTT+c4VcdrOLrsFvd4DxQ=",
+			"origin": "github.com/buckhx/gofence/vendor/github.com/davecheney/profile",
 			"path": "github.com/davecheney/profile",
 			"revision": "a38fda42f65efbbb244c33d4551654053da4df34",
 			"revisionTime": "2016-01-19T13:12:13+11:00"
 		},
 		{
+			"checksumSHA1": "ZqrAOPSXJz9yifSWZ62OcKnDUyk=",
+			"origin": "github.com/buckhx/gofence/vendor/github.com/deckarep/golang-set",
+			"path": "github.com/deckarep/golang-set",
+			"revision": "1f0f4ff8d3fbef9328522993ce71c35890f67554",
+			"revisionTime": "2016-02-20T15:57:50-08:00"
+		},
+		{
+			"origin": "github.com/buckhx/gofence/vendor/github.com/deckarep/golang-set",
 			"path": "github.com/deckarep/golang-set",
 			"revision": "1f0f4ff8d3fbef9328522993ce71c35890f67554",
 			"revisionTime": "2016-02-20T15:57:50-08:00"
 		},
 		{
 			"checksumSHA1": "rKV2bCLYgLVw5HFVw3y00QPXL8M=",
+			"origin": "github.com/buckhx/gofence/vendor/github.com/kpawlik/geojson",
+			"path": "github.com/kpawlik/geojson",
+			"revision": "06aeea8c5561aef0aee9ec036a1fd3fb55aea653",
+			"revisionTime": "2015-08-03T08:22:08+02:00"
+		},
+		{
+			"checksumSHA1": "rKV2bCLYgLVw5HFVw3y00QPXL8M=",
+			"origin": "github.com/buckhx/gofence/vendor/github.com/kpawlik/geojson",
+			"path": "github.com/kpawlik/geojson",
+			"revision": "06aeea8c5561aef0aee9ec036a1fd3fb55aea653",
+			"revisionTime": "2015-08-03T08:22:08+02:00"
+		},
+		{
 			"path": "github.com/kpawlik/geojson",
 			"revision": "06aeea8c5561aef0aee9ec036a1fd3fb55aea653",
 			"revisionTime": "2015-08-03T08:22:08+02:00"
