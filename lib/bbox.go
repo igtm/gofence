@@ -9,6 +9,7 @@ type box struct {
 	f *geo.Feature
 }
 
+// Checks every feature sequentially, first by bounding box, then geometries
 type BboxFence struct {
 	boxes []*box
 }

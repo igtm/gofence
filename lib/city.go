@@ -10,6 +10,8 @@ type CityFence struct {
 	boros    []*geo.Feature
 }
 
+// Only for demonstrative purposes
+// Checks the containing city first for inclusion, then features. Fully inspects each geometry in containing city
 // This requires the NYC_BOROS_PATH envvar to be set to the Borrough Boundaries geojson file
 // It can be found here http://www1.nyc.gov/site/planning/data-maps/open-data/districts-download-metadata.page
 func NewCityFence() *CityFence {

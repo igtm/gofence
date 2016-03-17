@@ -4,6 +4,7 @@ import (
 	"github.com/buckhx/diglet/geo"
 )
 
+// Standard rtree with M=50
 type Rfence struct {
 	rtree *geo.Rtree
 }

@@ -4,6 +4,7 @@ import (
 	"github.com/buckhx/diglet/geo"
 )
 
+// Use an quadtree for segmention. Only inspect geometries whose quad tree leaf contain the query
 type Qfence struct {
 	zoom  int
 	qtree map[string][]*geo.Feature

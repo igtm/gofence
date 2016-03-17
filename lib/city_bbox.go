@@ -5,13 +5,15 @@ import (
 	"os"
 )
 
+// Only for demonstrative purposes
+// Checks the containing city first for inclusion, then features. Checks are BoundingBox, then geometry
+// This requires the NYC_BOROS_PATH envvar to be set to the Borrough Boundaries geojson file
+// It can be found here http://www1.nyc.gov/site/planning/data-maps/open-data/districts-download-metadata.page
 type CityBboxFence struct {
 	features map[string][]*box
 	boros    []*box
 }
 
-// This requires the NYC_BOROS_PATH envvar to be set to the Borrough Boundaries geojson file
-// It can be found here http://www1.nyc.gov/site/planning/data-maps/open-data/districts-download-metadata.page
 func NewCityBboxFence() *CityBboxFence {
 	path := os.Getenv("NYC_BOROS_PATH")
 	if path == "" {

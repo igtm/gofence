@@ -4,6 +4,7 @@ import (
 	"github.com/buckhx/diglet/geo"
 )
 
+// Mutliple rtree segmented by quadtree first, probably only useful in a distributed environment
 type Qrfence struct {
 	zoom   int
 	qrtree map[string]*geo.Rtree

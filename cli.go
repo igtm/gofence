@@ -19,7 +19,7 @@ func client(args []string) {
 	app := cli.NewApp()
 	app.Name = "fence"
 	app.Usage = "Fence geojson features from stdin"
-	app.ArgsUsage = "fence_file"
+	app.ArgsUsage = "fence.geojson"
 	app.Flags = []cli.Flag{
 		cli.StringFlag{
 			Name:  "fence",

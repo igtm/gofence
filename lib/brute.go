@@ -4,6 +4,7 @@ import (
 	"github.com/buckhx/diglet/geo"
 )
 
+// Check every feature sequentially, fully inspecting every geometry
 type BruteFence struct {
 	features []*geo.Feature
 }
