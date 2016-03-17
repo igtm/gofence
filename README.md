@@ -25,3 +25,14 @@ GLOBAL OPTIONS:
 ```
 
 The city algorithms are special cases and both require NYC_BOROS_PATH envvar to be set to a geojson file
+
+## Benchmarks
+
+| Benchmark           |   Ops    |       Time       |     Bytes     |      Mallocs       | 
+|---------------------|----------|------------------|---------------|--------------------| 
+| BenchmarkBrute-4    |     5000 |     251641 ns/op |       19 B/op |        1 allocs/op | 
+| BenchmarkCity-4     |    30000 |      39913 ns/op |       40 B/op |        1 allocs/op | 
+| BenchmarkBbox-4     |    50000 |      37085 ns/op |       11 B/op |        1 allocs/op | 
+| BenchmarkCityBbox-4 |   200000 |       9484 ns/op |       13 B/op |        1 allocs/op | 
+| BenchmarkQfence-4   |   300000 |       3959 ns/op |      399 B/op |       18 allocs/op | 
+| BenchmarkRfence-4   |  1000000 |       2290 ns/op |      174 B/op |        9 allocs/op | 
