@@ -26,13 +26,19 @@ GLOBAL OPTIONS:
 
 The city algorithms are special cases and both require NYC_BOROS_PATH envvar to be set to a geojson file
 
+The boros and tracts data can be found on [NYC Open Data Maps](http://www1.nyc.gov/site/planning/data-maps/open-data/districts-download-metadata.page)
+
 ## Benchmarks
 
-| Benchmark           |   Ops    |       Time       |     Bytes     |      Mallocs       | 
-|---------------------|----------|------------------|---------------|--------------------| 
-| BenchmarkBrute-4    |     5000 |     251641 ns/op |       19 B/op |        1 allocs/op | 
-| BenchmarkCity-4     |    30000 |      39913 ns/op |       40 B/op |        1 allocs/op | 
-| BenchmarkBbox-4     |    50000 |      37085 ns/op |       11 B/op |        1 allocs/op | 
-| BenchmarkCityBbox-4 |   200000 |       9484 ns/op |       13 B/op |        1 allocs/op | 
-| BenchmarkQfence-4   |   300000 |       3959 ns/op |      399 B/op |       18 allocs/op | 
-| BenchmarkRfence-4   |  1000000 |       2290 ns/op |      174 B/op |        9 allocs/op | 
+| Benchmark           | Operations | Time (ns/op) | Bytes (b/op) | Mallocs (allocs/op) | 
+|---------------------|-----------:|-------------:|-------------:|--------------------:| 
+| BenchmarkBrute-4    |       5000 |       251641 |           19 |                   1 | 
+| BenchmarkCity-4     |      30000 |        39913 |           40 |                   1 | 
+| BenchmarkBbox-4     |      50000 |        37085 |           11 |                   1 | 
+| BenchmarkCityBbox-4 |     200000 |         9484 |           13 |                   1 | 
+| BenchmarkQfence-4   |     300000 |         3959 |          399 |                  18 | 
+| BenchmarkRfence-4   |    1000000 |         2290 |          174 |                   9 | 
+
+![chart link broken](https://docs.google.com/spreadsheets/d/1PYoxb7nhPA_zrh9oPFnUH0mvo8geYvEkjfe8Jtc0vvY/pubchart?oid=1486005290&format=image)
+
+Benchmarking requires NYC_TRACTS_PATH envvar to be set. Benchmarks are ran by checking which census tract a point is in [code here](lib/fence_test.go)
