@@ -36,6 +36,10 @@ func client(args []string) {
 			Value: 18,
 			Usage: "Some fences require a zoom level",
 		},
+		cli.BoolFlag{
+			Name:  "profile",
+			Usage: "Profiles execution via pprof",
+		},
 	}
 	app.Action = func(c *cli.Context) {
 		args := c.Args()
@@ -117,7 +121,8 @@ func load(fenceFile, fenceType string, zoom int) (fence geofence.GeoFence, err e
 
 func main() {
 	for _, arg := range os.Args {
-		if arg == "--debug" {
+		//wrap all execution
+		if arg == "--profile" {
 			config := &profile.Config{
 				MemProfile: true,
 				CPUProfile: true,
