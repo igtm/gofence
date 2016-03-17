@@ -1,0 +1,47 @@
+{
+	"comment": "",
+	"ignore": "test",
+	"package": [
+		{
+			"path": "github.com/buckhx/diglet/geo/tile_system",
+			"revision": "bca10df3cd9dd6bec703f436ffc4b0f82b106cac",
+			"revisionTime": "2016-03-17T00:31:36Z"
+		},
+		{
+			"path": "github.com/buckhx/diglet/util",
+			"revision": "bca10df3cd9dd6bec703f436ffc4b0f82b106cac",
+			"revisionTime": "2016-03-17T00:31:36Z"
+		},
+		{
+			"path": "github.com/buckhx/rtreego",
+			"revision": "1d24a50fd6ea181447983dbde9e16a984e17946a",
+			"revisionTime": "2016-03-17T00:32:18Z"
+		},
+		{
+			"path": "github.com/codegangsta/cli",
+			"revision": "aca5b047ed14d17224157c3434ea93bf6cdaadee",
+			"revisionTime": "2016-03-06T20:12:29-08:00"
+		},
+		{
+			"path": "github.com/davecheney/profile",
+			"revision": "a38fda42f65efbbb244c33d4551654053da4df34",
+			"revisionTime": "2016-01-19T13:12:13+11:00"
+		},
+		{
+			"path": "github.com/deckarep/golang-set",
+			"revision": "1f0f4ff8d3fbef9328522993ce71c35890f67554",
+			"revisionTime": "2016-02-20T15:57:50-08:00"
+		},
+		{
+			"checksumSHA1": "rKV2bCLYgLVw5HFVw3y00QPXL8M=",
+			"path": "github.com/kpawlik/geojson",
+			"revision": "06aeea8c5561aef0aee9ec036a1fd3fb55aea653",
+			"revisionTime": "2015-08-03T08:22:08+02:00"
+		},
+		{
+			"path": "github.com/kpawlik/geojson",
+			"revision": "06aeea8c5561aef0aee9ec036a1fd3fb55aea653",
+			"revisionTime": "2015-08-03T08:22:08+02:00"
+		}
+	]
+}
