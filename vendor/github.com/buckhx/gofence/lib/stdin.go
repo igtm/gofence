@@ -1,4 +1,6 @@
-package main
+// +build ignore
+
+package fence
 
 import (
 	"bufio"
@@ -57,10 +59,8 @@ func client(args []string) {
 		if err != nil {
 			die(c, err.Error())
 		}
-		err = geofence.ListenAndServe(":8080", fence)
-		die(c, err.Error())
-		//working := execute(os.Stdin, fence, w)
-		//working.Wait()
+		working := execute(os.Stdin, fence, w)
+		working.Wait()
 	}
 	app.Run(args)
 }
@@ -119,24 +119,4 @@ func load(fenceFile, fenceType string, zoom int) (fence geofence.GeoFence, err e
 		fence.Add(feature)
 	}
 	return
-}
-
-func main() {
-	for _, arg := range os.Args {
-		//wrap all execution
-		if arg == "--profile" {
-			config := &profile.Config{
-				MemProfile: true,
-				CPUProfile: true,
-			}
-			defer profile.Start(config).Stop()
-		}
-	}
-	client(os.Args)
-}
-
-func die(c *cli.Context, msg string) {
-	cli.ShowAppHelp(c)
-	fmt.Println(msg)
-	os.Exit(1)
 }
