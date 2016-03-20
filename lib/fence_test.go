@@ -1,11 +1,14 @@
 package geofence_test
 
 import (
-	"github.com/buckhx/diglet/geo"
-	"github.com/buckhx/gofence/lib"
+	"bytes"
+	"encoding/json"
 	"os"
 	"strings"
 	"testing"
+
+	"github.com/buckhx/diglet/geo"
+	"github.com/buckhx/gofence/lib"
 )
 
 var ues *geo.Feature
@@ -42,9 +45,36 @@ func TestFences(t *testing.T) {
 		}
 		fence.Add(ues)
 		for _, test := range tests {
+			// Search test
 			c := museums[test.museum]
 			if (len(fence.Get(c)) == 0) == test.contains {
-				t.Errorf("Bad containment %q %q %s", fn, test.museum, c)
+				t.Errorf("Invalid search %q %q %s", fn, test.museum, c)
+			}
+			// Encoding test
+			p := &geofence.PointMessage{
+				Type:       "Feature",
+				Properties: geofence.Properties{"name": []byte(test.museum)}, //TODO fix this
+				Geometry:   geofence.PointGeometry{Type: "Point", Coordinates: []float64{c.Lon, c.Lat}},
+			}
+			b := bytes.NewBuffer(nil)
+			err = geofence.WriteJson(b, p)
+			if err != nil {
+				t.Errorf("Error writing json %s", err)
+			}
+			res, err := geofence.GeojsonSearch(fence, b.Bytes())
+			if err != nil {
+				t.Errorf("Error GeojsonSearch %s", err)
+			}
+			var result geofence.ResponseMessage
+			err = json.Unmarshal(res, &result)
+			if err != nil {
+				t.Errorf("Error marshaling response json %s", err)
+			}
+			if (len(result.Fences) == 0) == test.contains {
+				//fmt.Printf("%s\n", result)
+				//fmt.Println(b.String())
+				//fmt.Println(string(res))
+				t.Errorf("Invalid GeojsonSearch %q %q %s", fn, test.museum, c)
 			}
 		}
 	}

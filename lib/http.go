@@ -1,6 +1,7 @@
 package geofence
 
 import (
+	"fmt"
 	"io"
 	"io/ioutil"
 	"log"
@@ -10,10 +11,11 @@ import (
 var fence GeoFence
 
 func ListenAndServe(addr string, gf GeoFence) error {
-	fence = gf
-	http.HandleFunc("/fence/search", httpSearch)
 	log.Printf("Fencing on address %s\n", addr)
 	defer log.Printf("Done Fencing\n")
+	fence = gf
+	http.HandleFunc("/fence/search", httpSearch)
+	http.HandleFunc("/engarde", httpEngarde)
 	return http.ListenAndServe(addr, nil)
 }
 
@@ -32,7 +34,19 @@ func httpSearch(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Invalid query", http.StatusBadRequest)
 		return
 	}
+	w.Header().Set("Server", "gofence")
+	w.Header().Set("Connection", "keep-alive")
 	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Content-Length", fmt.Sprint(len(result)))
 	w.WriteHeader(http.StatusOK)
 	w.Write(result)
+}
+
+func httpEngarde(w http.ResponseWriter, r *http.Request) {
+	response := "Touché!"
+	w.Header().Set("Server", "gofence")
+	w.Header().Set("Connection", "keep-alive")
+	w.Header().Set("Content-Type", "text/plain")
+	w.Header().Set("Content-Length", fmt.Sprint(len(response)))
+	fmt.Fprint(w, response)
 }

@@ -5,6 +5,7 @@ package geofence
 import (
 	"encoding/json"
 	"fmt"
+
 	"github.com/buckhx/diglet/geo"
 )
 
