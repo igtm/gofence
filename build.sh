@@ -19,6 +19,7 @@ go get github.com/client9/misspell/cmd/misspell
 go get github.com/golang/lint/golint
 go get ./...
 govendor add +external
+govendor update +vendor
 
 header "style checks"
 header "misspell"

@@ -1,245 +1,103 @@
 {
 	"comment": "",
-	"ignore": "test",
+	"ignore": "",
 	"package": [
 		{
-			"checksumSHA1": "6f/Rp7qnzLEN/2EwDMyD9PZ/7IM=",
+			"checksumSHA1": "cKGNwySo9B8bwhJsVEKn2haBymo=",
+			"origin": "github.com/buckhx/gofence/vendor/github.com/buckhx/diglet/geo",
+			"path": "github.com/buckhx/diglet/geo",
+			"revision": "f5b2c7629af4d5c4ecd2611ac000166619aca240",
+			"revisionTime": "2016-03-21T16:50:58-04:00"
+		},
+		{
+			"checksumSHA1": "nDUWY8sJrlRO7ADLcjjiCBgmgt4=",
+			"origin": "github.com/buckhx/gofence/vendor/github.com/buckhx/diglet/geo/tile_system",
+			"path": "github.com/buckhx/diglet/geo/tile_system",
+			"revision": "f5b2c7629af4d5c4ecd2611ac000166619aca240",
+			"revisionTime": "2016-03-21T16:50:58-04:00"
+		},
+		{
+			"checksumSHA1": "emeNNNycZTfOi4hoWGzJqtcyGr4=",
+			"origin": "github.com/buckhx/gofence/vendor/github.com/buckhx/diglet/util",
+			"path": "github.com/buckhx/diglet/util",
+			"revision": "f5b2c7629af4d5c4ecd2611ac000166619aca240",
+			"revisionTime": "2016-03-21T16:50:58-04:00"
+		},
+		{
+			"checksumSHA1": "JdtPXtZbt34FAmGI+sbrP6rqGHM=",
 			"path": "github.com/buckhx/gofence",
-			"revision": "2fb5e5ad4e0df8f2127f3d4c4821cda8da206086",
-			"revisionTime": "2016-03-17T22:20:52Z"
+			"revision": "73a9e5a78dbc909ce20e012deb09f2acdef04aae",
+			"revisionTime": "2016-03-20T19:40:20-04:00"
 		},
 		{
-			"checksumSHA1": "WHe9bFEZjhpOS2or3x9FfIhPMJc=",
+			"checksumSHA1": "jZbZCQeVP0nBYI1K5yZqPMTH5nc=",
 			"path": "github.com/buckhx/gofence/lib",
-			"revision": "9cd8e082b0c962e8fba1f0fabd4aca7c332f8cb9",
-			"revisionTime": "2016-03-18T21:40:14Z"
+			"revision": "73a9e5a78dbc909ce20e012deb09f2acdef04aae",
+			"revisionTime": "2016-03-20T19:40:20-04:00"
 		},
 		{
-			"checksumSHA1": "QOnGPb/1r8wb9gyJC6+xWgGT6YU=",
+			"checksumSHA1": "eDpu0f9KQC0hN9sZZK4JMR3hl88=",
 			"origin": "github.com/buckhx/gofence/vendor/github.com/buckhx/rtreego",
 			"path": "github.com/buckhx/rtreego",
-			"revision": "1d24a50fd6ea181447983dbde9e16a984e17946a",
-			"revisionTime": "2016-03-17T00:32:18Z"
+			"revision": "f7e5458b183ec0ddad9c37316b1dc06be6695655",
+			"revisionTime": "2016-02-24T23:34:01Z"
 		},
 		{
-			"checksumSHA1": "QOnGPb/1r8wb9gyJC6+xWgGT6YU=",
-			"origin": "github.com/buckhx/gofence/vendor/github.com/buckhx/rtreego",
-			"path": "github.com/buckhx/rtreego",
-			"revision": "1d24a50fd6ea181447983dbde9e16a984e17946a",
-			"revisionTime": "2016-03-17T00:32:18Z"
-		},
-		{
-			"checksumSHA1": "BLBx9HSRPH8EPHHFEnBErhC8QfU=",
+			"checksumSHA1": "q0WE6uWILgWxfh+j1r2b5A5oxXw=",
 			"origin": "github.com/buckhx/gofence/vendor/github.com/codegangsta/cli",
 			"path": "github.com/codegangsta/cli",
-			"revision": "aca5b047ed14d17224157c3434ea93bf6cdaadee",
-			"revisionTime": "2016-03-06T20:12:29-08:00"
+			"revision": "a7936f1d21fd8272ce215f3710a799960427c79c",
+			"revisionTime": "2016-03-20T15:44:03-05:00"
 		},
 		{
-			"checksumSHA1": "BLBx9HSRPH8EPHHFEnBErhC8QfU=",
-			"origin": "github.com/buckhx/gofence/vendor/github.com/codegangsta/cli",
-			"path": "github.com/codegangsta/cli",
-			"revision": "aca5b047ed14d17224157c3434ea93bf6cdaadee",
-			"revisionTime": "2016-03-06T20:12:29-08:00"
-		},
-		{
-			"checksumSHA1": "3BdelHTTT+c4VcdrOLrsFvd4DxQ=",
+			"checksumSHA1": "8aJ70q4aMsWvWfmdA7Mpiohq+pk=",
 			"origin": "github.com/buckhx/gofence/vendor/github.com/davecheney/profile",
 			"path": "github.com/davecheney/profile",
 			"revision": "a38fda42f65efbbb244c33d4551654053da4df34",
 			"revisionTime": "2016-01-19T13:12:13+11:00"
 		},
 		{
-			"checksumSHA1": "3BdelHTTT+c4VcdrOLrsFvd4DxQ=",
-			"origin": "github.com/buckhx/gofence/vendor/github.com/davecheney/profile",
-			"path": "github.com/davecheney/profile",
-			"revision": "a38fda42f65efbbb244c33d4551654053da4df34",
-			"revisionTime": "2016-01-19T13:12:13+11:00"
-		},
-		{
+			"checksumSHA1": "ZqWY0V7LY49TlYwl7QCFXQ0BgNU=",
 			"origin": "github.com/buckhx/gofence/vendor/github.com/deckarep/golang-set",
 			"path": "github.com/deckarep/golang-set",
 			"revision": "1f0f4ff8d3fbef9328522993ce71c35890f67554",
 			"revisionTime": "2016-02-20T15:57:50-08:00"
 		},
 		{
-			"checksumSHA1": "ZqrAOPSXJz9yifSWZ62OcKnDUyk=",
-			"origin": "github.com/buckhx/gofence/vendor/github.com/deckarep/golang-set",
-			"path": "github.com/deckarep/golang-set",
-			"revision": "1f0f4ff8d3fbef9328522993ce71c35890f67554",
-			"revisionTime": "2016-02-20T15:57:50-08:00"
+			"checksumSHA1": "5gVaTQkfn6R5ySTx2S/8GTY0mxA=",
+			"origin": "github.com/buckhx/gofence/vendor/github.com/julienschmidt/httprouter",
+			"path": "github.com/julienschmidt/httprouter",
+			"revision": "77366a47451a56bb3ba682481eed85b64fea14e8",
+			"revisionTime": "2016-02-19T16:40:26+01:00"
 		},
 		{
-			"checksumSHA1": "ZqrAOPSXJz9yifSWZ62OcKnDUyk=",
-			"origin": "github.com/buckhx/gofence/vendor/github.com/deckarep/golang-set",
-			"path": "github.com/deckarep/golang-set",
-			"revision": "1f0f4ff8d3fbef9328522993ce71c35890f67554",
-			"revisionTime": "2016-02-20T15:57:50-08:00"
-		},
-		{
-			"checksumSHA1": "ZqrAOPSXJz9yifSWZ62OcKnDUyk=",
-			"origin": "github.com/buckhx/gofence/vendor/github.com/deckarep/golang-set",
-			"path": "github.com/deckarep/golang-set",
-			"revision": "1f0f4ff8d3fbef9328522993ce71c35890f67554",
-			"revisionTime": "2016-02-20T15:57:50-08:00"
-		},
-		{
-			"checksumSHA1": "rKV2bCLYgLVw5HFVw3y00QPXL8M=",
+			"checksumSHA1": "5PPnbj+PeNdEHkyiy9d4fXz9jU8=",
 			"origin": "github.com/buckhx/gofence/vendor/github.com/kpawlik/geojson",
 			"path": "github.com/kpawlik/geojson",
 			"revision": "06aeea8c5561aef0aee9ec036a1fd3fb55aea653",
 			"revisionTime": "2015-08-03T08:22:08+02:00"
 		},
 		{
-			"checksumSHA1": "rKV2bCLYgLVw5HFVw3y00QPXL8M=",
-			"origin": "github.com/buckhx/gofence/vendor/github.com/kpawlik/geojson",
-			"path": "github.com/kpawlik/geojson",
-			"revision": "06aeea8c5561aef0aee9ec036a1fd3fb55aea653",
-			"revisionTime": "2015-08-03T08:22:08+02:00"
+			"checksumSHA1": "sKfYQurIIt+ldKDDF7TRbg9w20I=",
+			"origin": "github.com/buckhx/gofence/vendor/github.com/pquerna/ffjson/ffjson",
+			"path": "github.com/pquerna/ffjson/ffjson",
+			"revision": "03d5a0ae3a5a5d0cd8d2b593e247bb073c25dbcb",
+			"revisionTime": "2016-03-18T12:25:20-07:00"
 		},
 		{
-			"checksumSHA1": "rKV2bCLYgLVw5HFVw3y00QPXL8M=",
-			"origin": "github.com/buckhx/gofence/vendor/github.com/kpawlik/geojson",
-			"path": "github.com/kpawlik/geojson",
-			"revision": "06aeea8c5561aef0aee9ec036a1fd3fb55aea653",
-			"revisionTime": "2015-08-03T08:22:08+02:00"
+			"checksumSHA1": "0cPqCQPzsg9+F0EvMdciYNFWbnA=",
+			"origin": "github.com/buckhx/gofence/vendor/github.com/pquerna/ffjson/fflib/v1",
+			"path": "github.com/pquerna/ffjson/fflib/v1",
+			"revision": "03d5a0ae3a5a5d0cd8d2b593e247bb073c25dbcb",
+			"revisionTime": "2016-03-18T12:25:20-07:00"
 		},
 		{
-			"checksumSHA1": "rKV2bCLYgLVw5HFVw3y00QPXL8M=",
-			"origin": "github.com/buckhx/gofence/vendor/github.com/kpawlik/geojson",
-			"path": "github.com/kpawlik/geojson",
-			"revision": "06aeea8c5561aef0aee9ec036a1fd3fb55aea653",
-			"revisionTime": "2015-08-03T08:22:08+02:00"
-		},
-		{
-			"path": "github.com/kpawlik/geojson",
-			"revision": "06aeea8c5561aef0aee9ec036a1fd3fb55aea653",
-			"revisionTime": "2015-08-03T08:22:08+02:00"
-		},
-		{
-			"path": "github.com/kpawlik/geojson",
-			"revision": "06aeea8c5561aef0aee9ec036a1fd3fb55aea653",
-			"revisionTime": "2015-08-03T08:22:08+02:00"
-		},
-		{
-			"path": "github.com/kpawlik/geojson",
-			"revision": "06aeea8c5561aef0aee9ec036a1fd3fb55aea653",
-			"revisionTime": "2015-08-03T08:22:08+02:00"
-		},
-		{
-			"path": "github.com/kpawlik/geojson",
-			"revision": "06aeea8c5561aef0aee9ec036a1fd3fb55aea653",
-			"revisionTime": "2015-08-03T08:22:08+02:00"
-		},
-		{
-			"path": "io",
-			"revision": ""
-		},
-		{
-			"path": "io/ioutil",
-			"revision": ""
-		},
-		{
-			"path": "log",
-			"revision": ""
-		},
-		{
-			"path": "math",
-			"revision": ""
-		},
-		{
-			"path": "net/http",
-			"revision": ""
-		},
-		{
-			"path": "os",
-			"revision": ""
-		},
-		{
-			"path": "os/exec",
-			"revision": ""
-		},
-		{
-			"path": "os/signal",
-			"revision": ""
-		},
-		{
-			"path": "path",
-			"revision": ""
-		},
-		{
-			"path": "path/filepath",
-			"revision": ""
-		},
-		{
-			"path": "reflect",
-			"revision": ""
-		},
-		{
-			"path": "regexp",
-			"revision": ""
-		},
-		{
-			"path": "runtime",
-			"revision": ""
-		},
-		{
-			"path": "runtime/pprof",
-			"revision": ""
-		},
-		{
-			"path": "sort",
-			"revision": ""
-		},
-		{
-			"path": "strconv",
-			"revision": ""
-		},
-		{
-			"path": "strings",
-			"revision": ""
-		},
-		{
-			"path": "sync",
-			"revision": ""
-		},
-		{
-			"path": "testing",
-			"revision": ""
-		},
-		{
-			"path": "text/tabwriter",
-			"revision": ""
-		},
-		{
-			"path": "text/tabwriter",
-			"revision": ""
-		},
-		{
-			"path": "text/template",
-			"revision": ""
-		},
-		{
-			"path": "text/template",
-			"revision": ""
-		},
-		{
-			"path": "time",
-			"revision": ""
-		},
-		{
-			"checksumSHA1": "Qm3+hFXdDWFfbfg0TfqfoNbD+cQ=",
-			"path": "time",
-			"revision": ""
-		},
-		{
-			"checksumSHA1": "Qm3+hFXdDWFfbfg0TfqfoNbD+cQ=",
-			"path": "time",
-			"revision": ""
-		},
-		{
-			"path": "time",
-			"revision": ""
+			"checksumSHA1": "iZHmHPBzKJiS6ROUaVOf4DVOhbA=",
+			"origin": "github.com/buckhx/gofence/vendor/github.com/pquerna/ffjson/fflib/v1/internal",
+			"path": "github.com/pquerna/ffjson/fflib/v1/internal",
+			"revision": "03d5a0ae3a5a5d0cd8d2b593e247bb073c25dbcb",
+			"revisionTime": "2016-03-18T12:25:20-07:00"
 		}
-	]
+	],
+	"rootPath": "github.com/buckhx/gofence"
 }

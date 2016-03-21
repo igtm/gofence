@@ -2,10 +2,11 @@ package geo
 
 import (
 	"encoding/json"
+	"io/ioutil"
+
 	"github.com/buckhx/diglet/util"
 	"github.com/deckarep/golang-set"
 	"github.com/kpawlik/geojson"
-	"io/ioutil"
 )
 
 type GeojsonSource struct {
@@ -27,8 +28,12 @@ func NewGeojsonSource(path string, filter []string) *GeojsonSource {
 }
 
 func (gj *GeojsonSource) Publish() (features chan *Feature, err error) {
-	collection := readGeoJson(gj.path)
-	return publishFeatureCollection(collection), nil
+	collection, err := readGeoJson(gj.path)
+	if err != nil {
+		return
+	}
+	features = publishFeatureCollection(collection)
+	return
 }
 
 // Flatten all the points of a feature into single list. This can hel in identifying which tiles are going to be
@@ -123,15 +128,13 @@ func coordinatesAdapter(line geojson.Coordinates) (shape *Shape) {
 	return
 }
 
-func readGeoJson(path string) (features *geojson.FeatureCollection) {
+func readGeoJson(path string) (features *geojson.FeatureCollection, err error) {
 	file, err := ioutil.ReadFile(path)
 	if err != nil {
-		util.Check(err)
+		return
 	}
-	if err := json.Unmarshal(file, &features); err != nil {
-		util.Check(err)
-	}
-	return features
+	err = json.Unmarshal(file, &features)
+	return
 }
 
 func publishFeatureCollection(collection *geojson.FeatureCollection) (features chan *Feature) {

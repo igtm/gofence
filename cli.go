@@ -4,22 +4,25 @@ import (
 	"bufio"
 	"encoding/json"
 	"fmt"
+	"io"
+	"os"
+	"path/filepath"
+	"regexp"
+	"runtime"
+	"strings"
+	"sync"
+
 	"github.com/buckhx/diglet/geo"
 	"github.com/buckhx/gofence/lib"
 	"github.com/codegangsta/cli"
 	"github.com/davecheney/profile"
-	"io"
-	"os"
-	"runtime"
-	"strings"
-	"sync"
 )
 
 func client(args []string) {
 	app := cli.NewApp()
 	app.Name = "fence"
 	app.Usage = "Fence geojson features from stdin"
-	app.ArgsUsage = "fence.geojson"
+	app.ArgsUsage = "Path to directory with geojson to be loaded into fences"
 	app.Flags = []cli.Flag{
 		cli.StringFlag{
 			Name:  "fence",
@@ -44,20 +47,20 @@ func client(args []string) {
 	app.Action = func(c *cli.Context) {
 		args := c.Args()
 		if len(args) < 1 || args[0] == "" {
-			die(c, "fence_file required")
+			die(c, "fences_path required")
 		}
 		w := c.Int("concurrency")
 		z := c.Int("zoom")
 		if w < 1 || z < 0 || z > 23 {
 			die(c, "-c must be > 0 && 0 <= -z <= 23")
 		}
-		file := args[0]
+		path := args[0]
 		label := c.String("fence")
-		fence, err := load(file, label, z)
+		fences, err := load(path, label, z)
 		if err != nil {
 			die(c, err.Error())
 		}
-		err = geofence.ListenAndServe(":8080", fence)
+		err = geofence.ListenAndServe(":8080", fences)
 		die(c, err.Error())
 		//working := execute(os.Stdin, fence, w)
 		//working.Wait()
@@ -108,15 +111,28 @@ func execute(in io.Reader, fence geofence.GeoFence, w int) *sync.WaitGroup {
 	return working
 }
 
-func load(fenceFile, fenceType string, zoom int) (fence geofence.GeoFence, err error) {
-	fence, err = geofence.GetFence(fenceType, zoom)
+func load(dir, fenceType string, zoom int) (fences geofence.FenceIndex, err error) {
+	paths, err := filepath.Glob(filepath.Join(dir, "*json")) // .geo.json/.geojson/.json
 	if err != nil {
 		return
 	}
-	source := geo.NewGeojsonSource(fenceFile, nil)
-	features, _ := source.Publish()
-	for feature := range features {
-		fence.Add(feature)
+	fences = geofence.NewFenceIndex()
+	for _, path := range paths {
+		fence, err := geofence.GetFence(fenceType, zoom)
+		if err != nil {
+			fmt.Println("Error building fence for %s, skipping...", path)
+			continue
+		}
+		source := geo.NewGeojsonSource(path, nil) //panics on invalid json file
+		features, _ := source.Publish()
+		for feature := range features {
+			if feature.Type == "Point" {
+				continue // points don't have containment area
+			}
+			fence.Add(feature)
+		}
+		key := slug(path)
+		fences.Set(key, fence)
 	}
 	return
 }
@@ -139,4 +155,19 @@ func die(c *cli.Context, msg string) {
 	cli.ShowAppHelp(c)
 	fmt.Println(msg)
 	os.Exit(1)
+}
+
+var slugger = regexp.MustCompile("[^a-z0-9]+")
+
+// Slugs the basename of the path, removing the path and extension
+// "/path/to/file_2.gz " -> "file-2"
+// yoinked from diglet/util
+func slug(path string) string {
+	s := filepath.Base(path)
+	s = strings.TrimSuffix(s, filepath.Ext(s))
+	return slugged(s, "-")
+}
+
+func slugged(s, delim string) string {
+	return strings.Trim(slugger.ReplaceAllString(strings.ToLower(s), delim), delim)
 }

@@ -17,7 +17,9 @@ func NewRfence() *Rfence {
 
 func (r *Rfence) Add(f *geo.Feature) {
 	for _, shp := range f.Geometry {
-		r.rtree.Insert(shp, f)
+		if len(shp.Coordinates) > 1 { //single coords don't have an area
+			r.rtree.Insert(shp, f)
+		}
 	}
 }
 
