@@ -29,6 +29,17 @@ type ResponseMessage struct {
 	Fences []Properties `json:"fences"`
 }
 
+func newPoint(c geo.Coordinate, props map[string]interface{}) *PointMessage {
+	return &PointMessage{
+		Type:       "Feature",
+		Properties: Properties(props),
+		Geometry: PointGeometry{
+			Type:        "Point",
+			Coordinates: []float64{c.Lon, c.Lat}, // flip
+		},
+	}
+}
+
 func UnmarshalPoint(raw []byte) (point *PointMessage, err error) {
 	err = json.Unmarshal(raw, &point)
 	if err == nil {

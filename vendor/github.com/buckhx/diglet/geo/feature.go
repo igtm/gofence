@@ -1,8 +1,9 @@
 package geo
 
 import (
-	_ "github.com/buckhx/diglet/util"
 	"strings"
+
+	_ "github.com/buckhx/diglet/util"
 )
 
 const (
@@ -30,8 +31,13 @@ func NewLineFeature(geometry ...*Shape) *Feature {
 	return NewFeature(LineFeature, geometry...)
 }
 
-func NewPointFeature(geometry ...*Shape) *Feature {
-	return NewFeature(PointFeature, geometry...)
+func NewPointFeature(cs ...Coordinate) *Feature {
+	feature := MakeFeature(len(cs))
+	feature.Type = PointFeature
+	for i, c := range cs {
+		feature.Geometry[i] = NewShape(c)
+	}
+	return feature
 }
 
 func MakeFeature(length int) *Feature {

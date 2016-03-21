@@ -68,7 +68,7 @@ func TestFences(t *testing.T) {
 			if err != nil {
 				t.Errorf("Error writing json %s", err)
 			}
-			res, err := geofence.GeojsonSearch(fence, b.Bytes())
+			res, err := geofence.GeojsonSearch(idx, fn, b.Bytes())
 			if err != nil {
 				t.Errorf("Error GeojsonSearch %s", err)
 			}

@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/http"
 	_ "net/http/pprof"
+	"strconv"
 
 	"github.com/buckhx/diglet/geo"
 	"github.com/julienschmidt/httprouter"
@@ -20,10 +21,11 @@ func ListenAndServe(addr string, idx FenceIndex) error {
 	fences = idx
 	//http.Handle("/", fs)
 	router := httprouter.New()
-	router.GET("/engarde", handleEngarde)
-	router.GET("/fence", handleList)
-	router.POST("/fence/:name/add", handleAdd)
-	router.POST("/fence/:name/search", handleSearch)
+	router.GET("/engarde", getEngarde)
+	router.GET("/fence", getList)
+	router.POST("/fence/:name/add", postAdd)
+	router.POST("/fence/:name/search", postSearch)
+	router.GET("/fence/:name/search", getSearch)
 	return http.ListenAndServe(addr, router)
 }
 
@@ -35,11 +37,11 @@ func respond(w http.ResponseWriter, res interface{}) {
 	WriteJson(w, res)
 }
 
-func handleList(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
+func getList(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
 	WriteJson(w, fences.Keys())
 }
 
-func handleAdd(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
+func postAdd(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
 	body, err := ioutil.ReadAll(io.LimitReader(r.Body, 1<<26)) // 64 MB max
 	if err != nil {
 		http.Error(w, "Body 64 MB max", http.StatusRequestEntityTooLarge)
@@ -66,7 +68,7 @@ func handleAdd(w http.ResponseWriter, r *http.Request, params httprouter.Params)
 	respond(w, "success")
 }
 
-func handleSearch(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
+func postSearch(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
 	body, err := ioutil.ReadAll(io.LimitReader(r.Body, 1<<20)) // 1 MB max
 	if err != nil {
 		http.Error(w, "Body 1 MB max", http.StatusRequestEntityTooLarge)
@@ -85,7 +87,43 @@ func handleSearch(w http.ResponseWriter, r *http.Request, params httprouter.Para
 	respond(w, result)
 }
 
-func handleEngarde(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
+func getSearch(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
+	name := params.ByName("name")
+	query := r.URL.Query()
+	lat, err := strconv.ParseFloat(query.Get("lat"), 64)
+	if err != nil {
+		http.Error(w, "Query param 'lat' required as float", http.StatusBadRequest)
+		return
+	}
+	lon, err := strconv.ParseFloat(query.Get("lon"), 64)
+	if err != nil {
+		http.Error(w, "Query param 'lon' required as float", http.StatusBadRequest)
+		return
+	}
+	query.Del("lat")
+	query.Del("lon")
+	c := geo.Coordinate{Lat: lat, Lon: lon}
+	matchs, err := fences.Search(name, c)
+	if err != nil {
+		http.Error(w, "Error search fence "+name, http.StatusBadRequest)
+		return
+	}
+	fences := make([]Properties, len(matchs))
+	for i, fence := range matchs {
+		fences[i] = fence.Properties
+	}
+	props := make(map[string]interface{}, len(query))
+	for k := range query {
+		props[k] = query.Get(k)
+	}
+	result := ResponseMessage{
+		Query:  *newPoint(c, props),
+		Fences: fences,
+	}
+	respond(w, result)
+}
+
+func getEngarde(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
 	response := "Touché!"
 	w.Header().Set("Server", "gofence")
 	w.Header().Set("Connection", "keep-alive")
