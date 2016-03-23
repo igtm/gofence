@@ -1,6 +1,6 @@
 language: go
 go:
-  - 1.6 
+- 1.6
 env:
   matrix:
   - GOOS=linux GOARCH=amd64
@@ -19,21 +19,18 @@ env:
   - GOOS=freebsd GOARCH=386
   - GOOS=freebsd GOARCH=arm
 install:
-  - GOOS=`go env GOOS`
-  - GOARCH=`go env GOARCH`
-  - printenv
-  - go generate
+- GOOS=`go env GOOS`
+- GOARCH=`go env GOARCH`
+- printenv
+- go generate
 script:
-  - go test -v ./...
-  - if [[ $TRAVIS_BRANCH == v* ]]; then go build -ldflags '-extldflags "-static"' -o "fence_${GOOS}_${GOARCH}${EXT}"; fi
-  - ls
+- go test -v ./...
+- if [[ $TRAVIS_BRANCH == v* ]]; then go build -ldflags '-extldflags "-static"' -o "fence_${GOOS}_${GOARCH}${EXT}"; fi
+- ls
 deploy:
   provider: releases
   api_key:
-    secure: RSdgJIY0LlhMilzx7zXO+LBR4A/K6sgtCvOWZ+4sQ7xKm+eUT0i/sB0IPAge/9RT+KAXKvdeNrsJVGfXQIQAc39KOUXfplv1DGY4zNdbBRDySA2t7i+WsXbwZrR3wCSP0GrMs5ogT5LXA//17pdBk0bz94KSvn5MGNhNZIPmqrFINkfZnj1JX1Jh9WiX17e5VBsv0GRnCy+iTycm6LivtU6JFfZkJ3Bzksa90yXzMQnCjvewHHjzHmfTolmraPFUBwikwm4TkXriLJ6z4hbUPenLMvXEBW/wtGRjh/krAykc8OAPVDhup22WjBEClnDt1FNiCGP2i2IOYnCee9wr/08IkUcJ5Fslh3TgQ29q/BnDJA1IaJ5hFur2HOjPklktJw40PeKJcgYeaMm3fgZbzH5DFkGh2topXQ6N7pDkeeioXM5KP61qjD8Asb48ErU0Z2qqL0VfMHPPEmHttFlsbjAfKuBPtNDY2iBB393KWkeIaXbpuwK+TlxKbbZ7EBMRY2zNPC698ixQFyLeOhtAxfLtPGlRD3Smd0x0sDzk0ovIkd7GNhAUNAHvTxZSjxqK4gwDTaIM2gDgdWk4BM5617M+fYrUmYSzS0uSXk6fH+G+M9KqwHuy10ytZ6mPHi9nkNsI/onv/Og5gEEnDYoR7GtSyQgQ9tXOIyF8zUylqYg=
-  file: 
-    - "fence_${GOOS}_${GOARCH}${EXT}"
+    secure: CrvRmjoiEPTWIPWw4BrU1YiZQ9WGkzi7WIOxfCmNnyLcg/a6QVo5CV1vRyTKOY/JEnlU8PusEMgOX81sMIOpyaMHfLpR/ca7UzMp61MzCJ2Yah0Lw7kTJjT+cw5HB12OgxfED51XI9wQjgC+ByaLSH1oS25Md0GbLf0qRHCbLYaNDckw/EgbVNWZTDqUacJJFJcR8tbXYxsUXvBLJda8aPrGjiRaonj6gRjzDMQR2qFeX/kmOOzmIoa17jW9rpqj+G686FvDkyeoeBFFlS8YK8zeViclbpM3gpnpV+HdEixIKRP/gndoH0Tx90DPC64RJj3mibywWffG33RhYKx1twkbJGCU47tRzIapAdzSR4dmUL3rb0W3oJm7GY5IHLcOYWNFWVFRszOIySkM1hXVxbTWwZYZrEFaC9hFDAKB7A4X3D+SAFqseab16XB005RqrUDHAB1uLO03uivRbGWTj7s5I6i+JQfm9ps5UwcVrJm2xWlYFnqjl37rAfZgxXCADYOBjw6PbKF+xJjLvLd4kAEkSQ+siZvKoCBWLNfmmYFZGMWnj0BPFoPot/VDOFKklmTb+FcdyiZ2HFhjojIjkNpHWbNtWwuK0UcEHVm+lCx0K+GqMpz4T7S+dJoDVJBnGmSmiovC37UIwtFnRwnalq6O2Q332ghoFPQyPHzsuls=
+  file: fence_${GOOS}_$G{OARCH}${EXT}
   on:
     repo: buckhx/gofence
-    tags: true
-    all_branches: true
