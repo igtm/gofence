@@ -1,7 +1,7 @@
 language: go
 env:
   global:
-  - GIMME_GO_VERSION=1.6
+  - eval "$(GIMME_GO_VERSION=1.6 gimme)"
   matrix:
   - GIMME_OS=linux GIMME_ARCH=amd64
   - GIMME_OS=linux GIMME_ARCH=386
