@@ -19,7 +19,7 @@ type CityBboxFence struct {
 func NewCityBboxFence() (fence *CityBboxFence, err error) {
 	path := os.Getenv("NYC_BOROS_PATH")
 	if path == "" {
-		errors.New("Missing NYC_BOROS_PATH envvar")
+		err = errors.New("Missing NYC_BOROS_PATH envvar")
 		return
 	}
 	bfeatures, err := geo.NewGeojsonSource(path, nil).Publish()
