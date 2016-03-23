@@ -1,71 +1,18 @@
 // +build ignore
-
-package fence
+// An example stdin implementation
+package geofence
 
 import (
 	"bufio"
 	"encoding/json"
 	"fmt"
-	"github.com/buckhx/diglet/geo"
-	"github.com/buckhx/gofence/lib"
-	"github.com/codegangsta/cli"
-	"github.com/davecheney/profile"
 	"io"
-	"os"
-	"runtime"
-	"strings"
 	"sync"
+
+	"github.com/buckhx/diglet/geo"
 )
 
-func client(args []string) {
-	app := cli.NewApp()
-	app.Name = "fence"
-	app.Usage = "Fence geojson features from stdin"
-	app.ArgsUsage = "fence.geojson"
-	app.Flags = []cli.Flag{
-		cli.StringFlag{
-			Name:  "fence",
-			Value: "rtree",
-			Usage: "Type of fence to use " + strings.Join(geofence.FenceLabels, "|"),
-		},
-		cli.IntFlag{
-			Name:  "concurrency, c",
-			Value: runtime.GOMAXPROCS(0),
-			Usage: "Concurrency factor, defaults to number of cores",
-		},
-		cli.IntFlag{
-			Name:  "zoom, z",
-			Value: 18,
-			Usage: "Some fences require a zoom level",
-		},
-		cli.BoolFlag{
-			Name:  "profile",
-			Usage: "Profiles execution via pprof",
-		},
-	}
-	app.Action = func(c *cli.Context) {
-		args := c.Args()
-		if len(args) < 1 || args[0] == "" {
-			die(c, "fence_file required")
-		}
-		w := c.Int("concurrency")
-		z := c.Int("zoom")
-		if w < 1 || z < 0 || z > 23 {
-			die(c, "-c must be > 0 && 0 <= -z <= 23")
-		}
-		file := args[0]
-		label := c.String("fence")
-		fence, err := load(file, label, z)
-		if err != nil {
-			die(c, err.Error())
-		}
-		working := execute(os.Stdin, fence, w)
-		working.Wait()
-	}
-	app.Run(args)
-}
-
-func execute(in io.Reader, fence geofence.GeoFence, w int) *sync.WaitGroup {
+func execute(in io.Reader, fence GeoFence, w int) *sync.WaitGroup {
 	lines := make(chan string, 1<<10)
 	go func() {
 		defer close(lines)
@@ -106,17 +53,4 @@ func execute(in io.Reader, fence geofence.GeoFence, w int) *sync.WaitGroup {
 		}()
 	}
 	return working
-}
-
-func load(fenceFile, fenceType string, zoom int) (fence geofence.GeoFence, err error) {
-	fence, err = geofence.GetFence(fenceType, zoom)
-	if err != nil {
-		return
-	}
-	source := geo.NewGeojsonSource(fenceFile, nil)
-	features, _ := source.Publish()
-	for feature := range features {
-		fence.Add(feature)
-	}
-	return
 }

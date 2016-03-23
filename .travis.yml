@@ -1,0 +1,37 @@
+language: go
+go:
+  - 1.6 
+env:
+  matrix:
+  - GOOS=linux GOARCH=amd64
+  - GOOS=linux GOARCH=386
+  - GOOS=linux GOARCH=arm
+  - GOOS=linux GOARCH=arm64
+  - GOOS=linux GOARCH=ppc64
+  - GOOS=darwin GOARCH=amd64
+  - GOOS=darwin GOARCH=386
+  - GOOS=darwin GOARCH=arm
+  - GOOS=darwin GOARCH=arm64
+  - GOOS=windows GOARCH=amd64
+  - GOOS=windows GOARCH=386
+  - GOOS=windows GOARCH=arm
+  - GOOS=freebsd GOARCH=amd64
+  - GOOS=freebsd GOARCH=386
+  - GOOS=freebsd GOARCH=arm
+install:
+  - printenv
+  - go generate
+script:
+  - go test -v ./...
+  - if [[ $TRAVIS_BRANCH == v* ]]; then go build -ldflags '-extldflags "-static"' -o "fence_${GOOS}_${GOARCH}${EXT}"; fi
+  - ls
+deploy:
+  provider: releases
+  api_key:
+    secure: RSdgJIY0LlhMilzx7zXO+LBR4A/K6sgtCvOWZ+4sQ7xKm+eUT0i/sB0IPAge/9RT+KAXKvdeNrsJVGfXQIQAc39KOUXfplv1DGY4zNdbBRDySA2t7i+WsXbwZrR3wCSP0GrMs5ogT5LXA//17pdBk0bz94KSvn5MGNhNZIPmqrFINkfZnj1JX1Jh9WiX17e5VBsv0GRnCy+iTycm6LivtU6JFfZkJ3Bzksa90yXzMQnCjvewHHjzHmfTolmraPFUBwikwm4TkXriLJ6z4hbUPenLMvXEBW/wtGRjh/krAykc8OAPVDhup22WjBEClnDt1FNiCGP2i2IOYnCee9wr/08IkUcJ5Fslh3TgQ29q/BnDJA1IaJ5hFur2HOjPklktJw40PeKJcgYeaMm3fgZbzH5DFkGh2topXQ6N7pDkeeioXM5KP61qjD8Asb48ErU0Z2qqL0VfMHPPEmHttFlsbjAfKuBPtNDY2iBB393KWkeIaXbpuwK+TlxKbbZ7EBMRY2zNPC698ixQFyLeOhtAxfLtPGlRD3Smd0x0sDzk0ovIkd7GNhAUNAHvTxZSjxqK4gwDTaIM2gDgdWk4BM5617M+fYrUmYSzS0uSXk6fH+G+M9KqwHuy10ytZ6mPHi9nkNsI/onv/Og5gEEnDYoR7GtSyQgQ9tXOIyF8zUylqYg=
+  file: 
+    - "fence_${GOOS}_${GOARCH}${EXT}"
+  on:
+    repo: buckhx/gofence
+    tags: true
+    all_branches: true

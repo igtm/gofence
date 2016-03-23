@@ -2,6 +2,7 @@ package geofence
 
 import (
 	"fmt"
+	"path/filepath"
 	"sync"
 
 	"github.com/buckhx/diglet/geo"
@@ -105,4 +106,37 @@ func (idx *MutexFenceIndex) Keys() []string {
 	idx.RLock()
 	defer idx.RUnlock()
 	return idx.fences.Keys()
+}
+
+func LoadFenceIndex(dir, fenceType string, zoom int) (fences FenceIndex, err error) {
+	paths, err := filepath.Glob(filepath.Join(dir, "*json")) // .geo.json/.geojson/.json
+	if err != nil {
+		return
+	}
+	fences = NewFenceIndex()
+	for _, path := range paths {
+		fmt.Printf("Loading fence %s\n", path)
+		fence, err := GetFence(fenceType, zoom)
+		if err != nil {
+			fmt.Printf("Error building fence for %s, skipping...", path)
+			continue
+		}
+		source := geo.NewGeojsonSource(path, nil) //panics on invalid json file
+		features, err := source.Publish()
+		if err != nil {
+			return nil, err
+		}
+		i := 0
+		for feature := range features {
+			i++
+			fmt.Printf("Loading feature %d\n", i)
+			if feature.Type == "Point" {
+				continue // points don't have containment area
+			}
+			fence.Add(feature)
+		}
+		key := slug(path)
+		fences.Set(key, fence)
+	}
+	return
 }
