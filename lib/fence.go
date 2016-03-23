@@ -53,9 +53,9 @@ func GetFence(label string, zoom int) (fence GeoFence, err error) {
 	case BoundingBoxFence:
 		fence = NewBboxFence()
 	case CityBruteFence:
-		fence = NewCityFence()
+		fence, err = NewCityFence()
 	case CityBoxFence:
-		fence = NewCityBboxFence()
+		fence, err = NewCityBboxFence()
 	default:
 		err = fmt.Errorf("Bad fence type: %s", label)
 	}

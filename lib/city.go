@@ -1,8 +1,10 @@
 package geofence
 
 import (
-	"github.com/buckhx/diglet/geo"
+	"errors"
 	"os"
+
+	"github.com/buckhx/diglet/geo"
 )
 
 type CityFence struct {
@@ -14,23 +16,25 @@ type CityFence struct {
 // Checks the containing city first for inclusion, then features. Fully inspects each geometry in containing city
 // This requires the NYC_BOROS_PATH envvar to be set to the Borrough Boundaries geojson file
 // It can be found here http://www1.nyc.gov/site/planning/data-maps/open-data/districts-download-metadata.page
-func NewCityFence() *CityFence {
+func NewCityFence() (fence *CityFence, err error) {
 	path := os.Getenv("NYC_BOROS_PATH")
 	if path == "" {
-		panic("Missing NYC_BOROS_PATH envvar")
+		err = errors.New("Missing NYC_BOROS_PATH envvar for CityFence")
+		return
 	}
 	bfeatures, err := geo.NewGeojsonSource(path, nil).Publish()
 	if err != nil {
-		panic(err)
+		return
 	}
 	var boros []*geo.Feature
 	for b := range bfeatures {
 		boros = append(boros, b)
 	}
-	return &CityFence{
+	fence = &CityFence{
 		boros:    boros,
 		features: make(map[string][]*geo.Feature, 5),
 	}
+	return
 }
 
 // Features must contain a tag BoroName to match to a burrough

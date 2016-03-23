@@ -1,8 +1,10 @@
 package geofence
 
 import (
-	"github.com/buckhx/diglet/geo"
+	"errors"
 	"os"
+
+	"github.com/buckhx/diglet/geo"
 )
 
 // Only for demonstrative purposes
@@ -14,14 +16,15 @@ type CityBboxFence struct {
 	boros    []*box
 }
 
-func NewCityBboxFence() *CityBboxFence {
+func NewCityBboxFence() (fence *CityBboxFence, err error) {
 	path := os.Getenv("NYC_BOROS_PATH")
 	if path == "" {
-		panic("Missing NYC_BOROS_PATH envvar")
+		errors.New("Missing NYC_BOROS_PATH envvar")
+		return
 	}
 	bfeatures, err := geo.NewGeojsonSource(path, nil).Publish()
 	if err != nil {
-		panic(err)
+		return
 	}
 	var boros []*box
 	for b := range bfeatures {
@@ -30,10 +33,11 @@ func NewCityBboxFence() *CityBboxFence {
 			boros = append(boros, box)
 		}
 	}
-	return &CityBboxFence{
+	fence = &CityBboxFence{
 		boros:    boros,
 		features: make(map[string][]*box, 5),
 	}
+	return
 }
 
 // Features must contain a tag BoroName to match to a burrough

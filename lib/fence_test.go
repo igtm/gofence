@@ -2,6 +2,7 @@ package geofence_test
 
 import (
 	"bytes"
+	"fmt"
 	"os"
 	"strings"
 	"testing"
@@ -41,7 +42,9 @@ func TestFences(t *testing.T) {
 	for _, fn := range geofence.FenceLabels {
 		fence, err := geofence.GetFence(fn, 10)
 		if err != nil {
-			t.Errorf("Bad GetFence(%s) - %s", fn, err)
+			// City fences need NYC_BOROS_PATH and we don't always want to test them
+			t.Logf("Skipping %q because - %s", fn, err)
+			continue
 		}
 		idx.Set(fn, fence)
 		fence.Add(ues)
@@ -90,7 +93,11 @@ func BenchmarkBrute(b *testing.B) {
 }
 
 func BenchmarkCity(b *testing.B) {
-	fence := geofence.NewCityFence()
+	fence, err := geofence.NewCityFence()
+	if err != nil {
+		fmt.Printf("Skipping benchmark for 'CityFence' because %s", err)
+		return
+	}
 	for _, tract := range tracts {
 		fence.Add(tract)
 	}
@@ -110,7 +117,14 @@ func BenchmarkBbox(b *testing.B) {
 }
 
 func BenchmarkCityBbox(b *testing.B) {
-	fence := geofence.NewCityBboxFence()
+	fence, err := geofence.NewCityBboxFence()
+	if err != nil {
+		fmt.Printf("Skipping benchmark for 'CityBboxFence' because %s", err)
+		return
+	}
+	if err != nil {
+		return
+	}
 	for _, tract := range tracts {
 		fence.Add(tract)
 	}
