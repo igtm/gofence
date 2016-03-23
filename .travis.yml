@@ -28,9 +28,11 @@ script:
 - if [[ $TRAVIS_BRANCH == v* ]]; then go build -ldflags '-extldflags "-static"' -o "fence_${GOOS}_${GOARCH}${EXT}"; fi
 - ls
 deploy:
+  skip_cleanup: true
   provider: releases
   api_key:
     secure: CrvRmjoiEPTWIPWw4BrU1YiZQ9WGkzi7WIOxfCmNnyLcg/a6QVo5CV1vRyTKOY/JEnlU8PusEMgOX81sMIOpyaMHfLpR/ca7UzMp61MzCJ2Yah0Lw7kTJjT+cw5HB12OgxfED51XI9wQjgC+ByaLSH1oS25Md0GbLf0qRHCbLYaNDckw/EgbVNWZTDqUacJJFJcR8tbXYxsUXvBLJda8aPrGjiRaonj6gRjzDMQR2qFeX/kmOOzmIoa17jW9rpqj+G686FvDkyeoeBFFlS8YK8zeViclbpM3gpnpV+HdEixIKRP/gndoH0Tx90DPC64RJj3mibywWffG33RhYKx1twkbJGCU47tRzIapAdzSR4dmUL3rb0W3oJm7GY5IHLcOYWNFWVFRszOIySkM1hXVxbTWwZYZrEFaC9hFDAKB7A4X3D+SAFqseab16XB005RqrUDHAB1uLO03uivRbGWTj7s5I6i+JQfm9ps5UwcVrJm2xWlYFnqjl37rAfZgxXCADYOBjw6PbKF+xJjLvLd4kAEkSQ+siZvKoCBWLNfmmYFZGMWnj0BPFoPot/VDOFKklmTb+FcdyiZ2HFhjojIjkNpHWbNtWwuK0UcEHVm+lCx0K+GqMpz4T7S+dJoDVJBnGmSmiovC37UIwtFnRwnalq6O2Q332ghoFPQyPHzsuls=
-  file: fence_${GOOS}_$G{OARCH}${EXT}
+  file: fence_${GOOS}_${GOARCH}${EXT}
   on:
     repo: buckhx/gofence
+    tags: true
