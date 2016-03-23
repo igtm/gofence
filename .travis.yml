@@ -1,8 +1,7 @@
 language: go
-go:
-  global:
-  - 1.6
 env:
+  global:
+  - gimme 1.6
   matrix:
   - GIMME_OS=linux GIMME_ARCH=amd64
   - GIMME_OS=linux GIMME_ARCH=386
