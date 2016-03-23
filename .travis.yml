@@ -19,6 +19,8 @@ env:
   - GOOS=freebsd GOARCH=386
   - GOOS=freebsd GOARCH=arm
 install:
+  - GOOS=`go env GOOS`
+  - GOARCH=`go env GOARCH`
   - printenv
   - go generate
 script:
