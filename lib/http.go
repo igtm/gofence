@@ -88,7 +88,6 @@ func postSearch(w http.ResponseWriter, r *http.Request, params httprouter.Params
 }
 
 func getSearch(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
-	name := params.ByName("name")
 	query := r.URL.Query()
 	lat, err := strconv.ParseFloat(query.Get("lat"), 64)
 	if err != nil {
@@ -103,6 +102,7 @@ func getSearch(w http.ResponseWriter, r *http.Request, params httprouter.Params)
 	query.Del("lat")
 	query.Del("lon")
 	c := geo.Coordinate{Lat: lat, Lon: lon}
+	name := params.ByName("name")
 	matchs, err := fences.Search(name, c)
 	if err != nil {
 		http.Error(w, "Error search fence "+name, http.StatusBadRequest)

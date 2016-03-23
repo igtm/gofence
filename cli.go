@@ -1,16 +1,12 @@
 package main
 
 import (
-	"bufio"
-	"encoding/json"
 	"fmt"
-	"io"
 	"os"
 	"path/filepath"
 	"regexp"
 	"runtime"
 	"strings"
-	"sync"
 
 	"github.com/buckhx/diglet/geo"
 	"github.com/buckhx/gofence/lib"
@@ -39,6 +35,11 @@ func client(args []string) {
 			Value: 18,
 			Usage: "Some fences require a zoom level",
 		},
+		cli.StringFlag{
+			Name:  "port, p",
+			Value: "8080",
+			Usage: "Port to bind to",
+		},
 		cli.BoolFlag{
 			Name:  "profile",
 			Usage: "Profiles execution via pprof",
@@ -60,55 +61,11 @@ func client(args []string) {
 		if err != nil {
 			die(c, err.Error())
 		}
-		err = geofence.ListenAndServe(":8080", fences)
+		port := fmt.Sprintf(":%s", c.String("port"))
+		err = geofence.ListenAndServe(port, fences)
 		die(c, err.Error())
-		//working := execute(os.Stdin, fence, w)
-		//working.Wait()
 	}
 	app.Run(args)
-}
-
-func execute(in io.Reader, fence geofence.GeoFence, w int) *sync.WaitGroup {
-	lines := make(chan string, 1<<10)
-	go func() {
-		defer close(lines)
-		scanner := bufio.NewScanner(in)
-		for scanner.Scan() {
-			lines <- scanner.Text()
-		}
-	}()
-	working := &sync.WaitGroup{}
-	for i := 0; i < w; i++ {
-		working.Add(1)
-		go func() {
-			defer working.Done()
-			for line := range lines {
-				gj, err := geo.UnmarshalGeojsonFeature(line)
-				if err != nil {
-					fmt.Println(err)
-					continue
-				}
-				query, err := geo.GeojsonFeatureAdapter(gj)
-				if err != nil {
-					fmt.Println(err)
-					continue
-				}
-				matchs := fence.Get(query.Geometry[0].Head()) // it's a point
-				fences := make([]map[string]interface{}, len(matchs))
-				for i, match := range matchs {
-					fences[i] = match.Properties
-				}
-				query.Properties["fences"] = fences
-				res, err := json.Marshal(query)
-				if err != nil {
-					fmt.Println(err)
-					continue
-				}
-				fmt.Printf("%s\n", res)
-			}
-		}()
-	}
-	return working
 }
 
 func load(dir, fenceType string, zoom int) (fences geofence.FenceIndex, err error) {
@@ -118,14 +75,21 @@ func load(dir, fenceType string, zoom int) (fences geofence.FenceIndex, err erro
 	}
 	fences = geofence.NewFenceIndex()
 	for _, path := range paths {
+		fmt.Printf("Loading fence %s\n", path)
 		fence, err := geofence.GetFence(fenceType, zoom)
 		if err != nil {
-			fmt.Println("Error building fence for %s, skipping...", path)
+			fmt.Printf("Error building fence for %s, skipping...", path)
 			continue
 		}
 		source := geo.NewGeojsonSource(path, nil) //panics on invalid json file
-		features, _ := source.Publish()
+		features, err := source.Publish()
+		if err != nil {
+			return nil, err
+		}
+		i := 0
 		for feature := range features {
+			i++
+			fmt.Printf("Loading feature %d\n", i)
 			if feature.Type == "Point" {
 				continue // points don't have containment area
 			}

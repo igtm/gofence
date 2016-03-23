@@ -61,11 +61,11 @@ func WriteJson(w io.Writer, msg interface{}) (err error) {
 	return
 }
 
-// Searchs the fence for the query string. Query should be a geojson point feature.
-// Returns a string of the query with a property key 'fences' which is a list of
+// Searchs the fence for the contents of body. Body should be a geojson point feature.
+// Returns a json string of the body with a property key 'fences' which is a list of
 // the property object of the features that contain the query.
-func GeojsonSearch(idx FenceIndex, name string, query []byte) (result ResponseMessage, err error) {
-	point, err := UnmarshalPoint(query)
+func GeojsonSearch(idx FenceIndex, name string, body []byte) (result ResponseMessage, err error) {
+	point, err := UnmarshalPoint(body)
 	if err != nil {
 		return
 	}
