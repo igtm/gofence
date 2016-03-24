@@ -54,7 +54,7 @@ Features in a fence have no notion of uniqueness, so if you add the same feature
 
     POST /fence/:name/search
 
-Search a fence for the . This query must be a geojson feature with a point geometry. The properties of the matched features in the fence will be returned as a list.
+Search a fence for the query in the post body. This query must be a geojson feature with a point geometry. The properties of the matched features in the fence will be returned as a list.
 
     GET /fence/:name/search?lat=<LAT>&lon=<LON>
 
