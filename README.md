@@ -1,5 +1,7 @@
 # gofence
 
+[![Build Status](https://travis-ci.org/buckhx/gofence.svg?branch=master)](https://travis-ci.org/buckhx/gofence)
+
 Tool for geofencing with different algorithms for profiling. 
 
 ## Installation
@@ -74,3 +76,7 @@ Convenience method for search with GET parameters. Both lat and lon and required
 ![chart link broken](https://docs.google.com/spreadsheets/d/1PYoxb7nhPA_zrh9oPFnUH0mvo8geYvEkjfe8Jtc0vvY/pubchart?oid=1486005290&format=image)
 
 Benchmarking requires NYC_TRACTS_PATH envvar to be set. Benchmarks are ran by checking which census tract a point is in [code here](lib/fence_test.go)
+
+HTTP profiling is done via https://golang.org/pkg/net/http/pprof/
+
+See https://github.com/buckhx/gofence-profiling for more in depth benmarking.
