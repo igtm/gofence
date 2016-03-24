@@ -39,5 +39,5 @@ release = json.loads(content)
 link = [asset['browser_download_url'] for asset in release['assets'] if asset['name'] == artifact][0]
 print("Downloading binary from", link)
 urllib.urlretrieve(link, binary)
-os.chmod(bindir, 0o755)
+os.chmod(bindir, 0755)
 print("Installed fence at", binary)
