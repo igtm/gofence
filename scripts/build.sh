@@ -43,7 +43,7 @@ echo go test ./...
 go test ./...
 
 header "go build"
-echo go build -ldflags '-extldflags "-static"' -o fence
-go build -ldflags '-extldflags "-static"' -o fence
+echo go build -ldflags "-X 'main.version=`git describe --always --tags`' -extldflags '-static'" -o fence
+go build -ldflags "-X 'main.version=`git describe --always` --tags' -extldflags '-static'" -o fence
 
 echo "Done!"

@@ -5,15 +5,18 @@ import (
 	"os"
 	"strings"
 
-	"github.com/buckhx/gofence/lib"
+	"github.com/buckhx/gofence/geofence"
 	"github.com/codegangsta/cli"
 )
+
+var version string
 
 func client(args []string) {
 	app := cli.NewApp()
 	app.Name = "fence"
 	app.Usage = "Fence geojson point features"
 	app.ArgsUsage = "path/to/geojson/dir"
+	app.Version = version // set with go tool link -X
 	app.Flags = []cli.Flag{
 		cli.StringFlag{
 			Name:  "fence",

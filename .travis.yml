@@ -7,7 +7,8 @@ install:
 - go generate
 script:
 - go test -v ./...
-- if [[ $TRAVIS_BRANCH == v* ]]; then gox -verbose -output="fence_{{.OS}}_{{.Arch}}" -ldflags '-extldflags "-static"'; fi
+- xcompile() { gox -verbose -output="fence_{{.OS}}_{{.Arch}}" -ldflags "-X 'main.version=`git describe --always --tags`' -extldflags '-static'" ; }
+- if [[ $TRAVIS_BRANCH == v* ]]; then xcompile ; fi
 - ls
 deploy:
   skip_cleanup: true
