@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"testing"
 
-	"github.com/buckhx/gofence/lib"
+	"github.com/buckhx/gofence/geofence"
 )
 
 func TestMessageRoundTrip(t *testing.T) {

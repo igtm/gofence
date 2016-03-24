@@ -8,7 +8,7 @@ import (
 	"testing"
 
 	"github.com/buckhx/diglet/geo"
-	"github.com/buckhx/gofence/lib"
+	"github.com/buckhx/gofence/geofence"
 )
 
 var ues *geo.Feature
