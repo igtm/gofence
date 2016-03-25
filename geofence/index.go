@@ -2,6 +2,7 @@ package geofence
 
 import (
 	"fmt"
+	"log"
 	"path/filepath"
 	"sync"
 
@@ -115,10 +116,11 @@ func LoadFenceIndex(dir, fenceType string, zoom int) (fences FenceIndex, err err
 	}
 	fences = NewFenceIndex()
 	for _, path := range paths {
-		fmt.Printf("Loading fence %s\n", path)
+		key := slug(path)
+		log.Printf("Loading fence %s from %s\n", key, path)
 		fence, err := GetFence(fenceType, zoom)
 		if err != nil {
-			fmt.Printf("Error building fence for %s, skipping...", path)
+			log.Printf("Error building fence for %s, skipping...", key)
 			continue
 		}
 		source := geo.NewGeojsonSource(path, nil) //panics on invalid json file
@@ -135,9 +137,12 @@ func LoadFenceIndex(dir, fenceType string, zoom int) (fences FenceIndex, err err
 			fence.Add(feature)
 			i++
 		}
-		fmt.Printf("Loaded %d features\n", i)
-		key := slug(path)
+		log.Printf("Loaded %d features for %s\n", i, key)
 		fences.Set(key, fence)
+	}
+	if len(fences.Keys()) < 1 {
+		fences = nil
+		err = fmt.Errorf("No valid geojson fences at %s", dir)
 	}
 	return
 }

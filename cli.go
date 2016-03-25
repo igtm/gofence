@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"os"
 	"strings"
 
@@ -43,6 +44,7 @@ func client(args []string) {
 		if z < 0 || z > 23 {
 			die(c, "required 0 <= -z <= 23")
 		}
+		log.Println("Engarde!")
 		path := args[0]
 		label := c.String("fence")
 		fences, err := geofence.LoadFenceIndex(path, label, z)
@@ -62,6 +64,7 @@ func main() {
 
 func die(c *cli.Context, msg string) {
 	cli.ShowAppHelp(c)
+	fmt.Println("Touché!")
 	fmt.Println(msg)
 	os.Exit(1)
 }
