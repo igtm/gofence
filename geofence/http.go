@@ -6,7 +6,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
-	_ "net/http/pprof"
+	"net/http/pprof"
 	"strconv"
 
 	"github.com/buckhx/diglet/geo"
@@ -15,7 +15,7 @@ import (
 
 var fences FenceIndex
 
-func ListenAndServe(addr string, idx FenceIndex) error {
+func ListenAndServe(addr string, idx FenceIndex, profile bool) error {
 	log.Printf("Fencing on address %s\n", addr)
 	defer log.Printf("Done Fencing\n")
 	fences = idx
@@ -26,6 +26,9 @@ func ListenAndServe(addr string, idx FenceIndex) error {
 	router.POST("/fence/:name/add", postAdd)
 	router.POST("/fence/:name/search", postSearch)
 	router.GET("/fence/:name/search", getSearch)
+	if profile {
+		attachProfiler(router)
+	}
 	return http.ListenAndServe(addr, router)
 }
 
@@ -130,4 +133,15 @@ func getEngarde(w http.ResponseWriter, r *http.Request, params httprouter.Params
 	w.Header().Set("Content-Type", "text/plain")
 	w.Header().Set("Content-Length", fmt.Sprint(len(response)))
 	fmt.Fprint(w, response)
+}
+
+func attachProfiler(router *httprouter.Router) {
+	router.HandlerFunc("GET", "/debug/pprof/", pprof.Index)
+	router.HandlerFunc("GET", "/debug/pprof/cmdline", pprof.Cmdline)
+	router.HandlerFunc("GET", "/debug/pprof/profile", pprof.Profile)
+	router.HandlerFunc("GET", "/debug/pprof/symbol", pprof.Symbol)
+	router.Handler("GET", "/debug/pprof/heap", pprof.Handler("heap"))
+	router.Handler("GET", "/debug/pprof/block", pprof.Handler("block"))
+	router.Handler("GET", "/debug/pprof/goroutine", pprof.Handler("goroutine"))
+	router.Handler("GET", "/debug/pprof/threadcreate", pprof.Handler("threadcreate"))
 }

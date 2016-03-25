@@ -34,6 +34,10 @@ func client(args []string) {
 			Value: "8080",
 			Usage: "Port to bind to",
 		},
+		cli.BoolFlag{
+			Name:  "profile",
+			Usage: "Mount profiling endpoints",
+		},
 	}
 	app.Action = func(c *cli.Context) {
 		args := c.Args()
@@ -51,8 +55,12 @@ func client(args []string) {
 		if err != nil {
 			die(c, err.Error())
 		}
+		prof := c.Bool("profile")
+		if prof {
+			log.Println("Profiling available at /debug/pprof/")
+		}
 		port := fmt.Sprintf(":%s", c.String("port"))
-		err = geofence.ListenAndServe(port, fences)
+		err = geofence.ListenAndServe(port, fences, prof)
 		die(c, err.Error())
 	}
 	app.Run(args)
