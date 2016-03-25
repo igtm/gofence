@@ -11,19 +11,25 @@ import (
 	"github.com/buckhx/gofence/geofence"
 )
 
-var ues *geo.Feature
-var s2f geofence.GeoFence
-var tracts, result []*geo.Feature
-var museums = map[string]geo.Coordinate{
-	"guggenheim":      {40.7830, -73.9590},
-	"met":             {40.7788, -73.9621},
-	"moma":            {40.7615, -73.9777},
-	"whitney":         {40.7396, -74.0089},
-	"old whitney":     {40.7732, -73.9641},
-	"natural history": {40.7806, -73.9747},
-	"brooklyn":        {40.6713, -73.9638},
-	"louvre":          {48.8611, 2.3364},
-}
+const (
+	TEST_ZOOM = 14
+)
+
+var (
+	ues            *geo.Feature
+	s2f            geofence.GeoFence
+	tracts, result []*geo.Feature
+	museums        = map[string]geo.Coordinate{
+		"guggenheim":      {40.7830, -73.9590},
+		"met":             {40.7788, -73.9621},
+		"moma":            {40.7615, -73.9777},
+		"whitney":         {40.7396, -74.0089},
+		"old whitney":     {40.7732, -73.9641},
+		"natural history": {40.7806, -73.9747},
+		"brooklyn":        {40.6713, -73.9638},
+		"louvre":          {48.8611, 2.3364},
+	}
+)
 
 func TestFences(t *testing.T) {
 	tests := []struct {
@@ -41,7 +47,7 @@ func TestFences(t *testing.T) {
 	}
 	idx := geofence.NewFenceIndex()
 	for _, fn := range geofence.FenceLabels {
-		fence, err := geofence.GetFence(fn, 14)
+		fence, err := geofence.GetFence(fn, TEST_ZOOM)
 		if err != nil {
 			// City fences need NYC_BOROS_PATH and we don't always want to test them
 			t.Logf("Skipping %q because - %s", fn, err)
@@ -90,7 +96,10 @@ func BenchmarkBrute(b *testing.B) {
 	}
 	b.ResetTimer()
 	for n := 0; n < b.N; n++ {
-		result = fence.Get(museums["met"])
+		result = fence.Get(museums["old whitney"])
+		if len(result) != 1 {
+			b.Fatal("Incorrect Get() result")
+		}
 	}
 }
 
@@ -105,7 +114,10 @@ func BenchmarkCity(b *testing.B) {
 	}
 	b.ResetTimer()
 	for n := 0; n < b.N; n++ {
-		result = fence.Get(museums["met"])
+		result = fence.Get(museums["old whitney"])
+		if len(result) != 1 {
+			b.Fatal("Incorrect Get() result")
+		}
 	}
 }
 
@@ -116,7 +128,10 @@ func BenchmarkBbox(b *testing.B) {
 	}
 	b.ResetTimer()
 	for n := 0; n < b.N; n++ {
-		result = fence.Get(museums["met"])
+		result = fence.Get(museums["old whitney"])
+		if len(result) != 1 {
+			b.Fatal("Incorrect Get() result")
+		}
 	}
 }
 
@@ -134,18 +149,24 @@ func BenchmarkCityBbox(b *testing.B) {
 	}
 	b.ResetTimer()
 	for n := 0; n < b.N; n++ {
-		result = fence.Get(museums["met"])
+		result = fence.Get(museums["old whitney"])
+		if len(result) != 1 {
+			b.Fatal("Incorrect Get() result")
+		}
 	}
 }
 
 func BenchmarkQfence(b *testing.B) {
-	fence := geofence.NewQfence(14)
+	fence := geofence.NewQfence(TEST_ZOOM)
 	for _, tract := range tracts {
 		fence.Add(tract)
 	}
 	b.ResetTimer()
 	for n := 0; n < b.N; n++ {
-		result = fence.Get(museums["met"])
+		result = fence.Get(museums["old whitney"])
+		if len(result) != 1 {
+			b.Fatal("Incorrect Get() result")
+		}
 	}
 }
 
@@ -156,15 +177,19 @@ func BenchmarkRfence(b *testing.B) {
 	}
 	b.ResetTimer()
 	for n := 0; n < b.N; n++ {
-		result = fence.Get(museums["met"])
+		result = fence.Get(museums["old whitney"])
+		if len(result) != 1 {
+			b.Fatal("Incorrect Get() result")
+		}
 	}
 }
 
 func BenchmarkS2fence(b *testing.B) {
 	for n := 0; n < b.N; n++ {
+		// interior @ Z18
 		result = s2f.Get(museums["old whitney"])
 		if len(result) != 1 {
-			panic(result)
+			b.Fatal("Incorrect Get() result")
 		}
 	}
 }
@@ -183,7 +208,7 @@ func TestMain(m *testing.M) {
 			}
 			tracts = features
 			fmt.Println("Loading s2fence...")
-			s2f = geofence.NewS2fence(14)
+			s2f = geofence.NewS2fence(TEST_ZOOM)
 			for _, tract := range tracts {
 				//fmt.Printf("s2fence adding feature %d\n", i)
 				s2f.Add(tract)
