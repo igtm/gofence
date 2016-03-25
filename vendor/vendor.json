@@ -52,6 +52,36 @@
 			"revisionTime": "2016-02-20T15:57:50-08:00"
 		},
 		{
+			"checksumSHA1": "/iFfZBskKPCDfxdzgmbVw5OBd/Y=",
+			"path": "github.com/golang/geo/r1",
+			"revision": "1e8d2b4605dfbb9666ef1be70bd68018e7c0d497",
+			"revisionTime": "2016-02-12T13:12:00+11:00"
+		},
+		{
+			"checksumSHA1": "rYkx3WeQuJTstO/J2x95Qph6l/s=",
+			"path": "github.com/golang/geo/r2",
+			"revision": "1e8d2b4605dfbb9666ef1be70bd68018e7c0d497",
+			"revisionTime": "2016-02-12T13:12:00+11:00"
+		},
+		{
+			"checksumSHA1": "XB+9A/spqI4LPvhk+lXaaZGOP7c=",
+			"path": "github.com/golang/geo/r3",
+			"revision": "1e8d2b4605dfbb9666ef1be70bd68018e7c0d497",
+			"revisionTime": "2016-02-12T13:12:00+11:00"
+		},
+		{
+			"checksumSHA1": "EtpeyK+LsvK4Dx+Hm3YaRaPnY9E=",
+			"path": "github.com/golang/geo/s1",
+			"revision": "1e8d2b4605dfbb9666ef1be70bd68018e7c0d497",
+			"revisionTime": "2016-02-12T13:12:00+11:00"
+		},
+		{
+			"checksumSHA1": "1JlkJfAtQSrAJ16nVk7DE/8cYdY=",
+			"path": "github.com/golang/geo/s2",
+			"revision": "1e8d2b4605dfbb9666ef1be70bd68018e7c0d497",
+			"revisionTime": "2016-02-12T13:12:00+11:00"
+		},
+		{
 			"checksumSHA1": "mZK+4q1Xr8z0AwkCAgO+7Rb8xk8=",
 			"origin": "github.com/buckhx/gofence/vendor/github.com/julienschmidt/httprouter",
 			"path": "github.com/julienschmidt/httprouter",
