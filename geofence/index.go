@@ -128,13 +128,14 @@ func LoadFenceIndex(dir, fenceType string, zoom int) (fences FenceIndex, err err
 		}
 		i := 0
 		for feature := range features {
-			i++
-			fmt.Printf("Loading feature %d\n", i)
 			if feature.Type == "Point" {
 				continue // points don't have containment area
 			}
+			//fmt.Printf("Loading feature %d\n", i)
 			fence.Add(feature)
+			i++
 		}
+		fmt.Printf("Loaded %d features\n", i)
 		key := slug(path)
 		fences.Set(key, fence)
 	}

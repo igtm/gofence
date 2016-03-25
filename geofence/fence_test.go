@@ -12,6 +12,7 @@ import (
 )
 
 var ues *geo.Feature
+var s2f geofence.GeoFence
 var tracts, result []*geo.Feature
 var museums = map[string]geo.Coordinate{
 	"guggenheim":      {40.7830, -73.9590},
@@ -40,7 +41,7 @@ func TestFences(t *testing.T) {
 	}
 	idx := geofence.NewFenceIndex()
 	for _, fn := range geofence.FenceLabels {
-		fence, err := geofence.GetFence(fn, 10)
+		fence, err := geofence.GetFence(fn, 14)
 		if err != nil {
 			// City fences need NYC_BOROS_PATH and we don't always want to test them
 			t.Logf("Skipping %q because - %s", fn, err)
@@ -87,6 +88,7 @@ func BenchmarkBrute(b *testing.B) {
 	for _, tract := range tracts {
 		fence.Add(tract)
 	}
+	b.ResetTimer()
 	for n := 0; n < b.N; n++ {
 		result = fence.Get(museums["met"])
 	}
@@ -101,6 +103,7 @@ func BenchmarkCity(b *testing.B) {
 	for _, tract := range tracts {
 		fence.Add(tract)
 	}
+	b.ResetTimer()
 	for n := 0; n < b.N; n++ {
 		result = fence.Get(museums["met"])
 	}
@@ -111,6 +114,7 @@ func BenchmarkBbox(b *testing.B) {
 	for _, tract := range tracts {
 		fence.Add(tract)
 	}
+	b.ResetTimer()
 	for n := 0; n < b.N; n++ {
 		result = fence.Get(museums["met"])
 	}
@@ -128,6 +132,7 @@ func BenchmarkCityBbox(b *testing.B) {
 	for _, tract := range tracts {
 		fence.Add(tract)
 	}
+	b.ResetTimer()
 	for n := 0; n < b.N; n++ {
 		result = fence.Get(museums["met"])
 	}
@@ -138,6 +143,7 @@ func BenchmarkQfence(b *testing.B) {
 	for _, tract := range tracts {
 		fence.Add(tract)
 	}
+	b.ResetTimer()
 	for n := 0; n < b.N; n++ {
 		result = fence.Get(museums["met"])
 	}
@@ -148,8 +154,18 @@ func BenchmarkRfence(b *testing.B) {
 	for _, tract := range tracts {
 		fence.Add(tract)
 	}
+	b.ResetTimer()
 	for n := 0; n < b.N; n++ {
 		result = fence.Get(museums["met"])
+	}
+}
+
+func BenchmarkS2fence(b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		result = s2f.Get(museums["old whitney"])
+		if len(result) != 1 {
+			panic(result)
+		}
 	}
 }
 
@@ -166,6 +182,13 @@ func TestMain(m *testing.M) {
 				panic(err)
 			}
 			tracts = features
+			fmt.Println("Loading s2fence...")
+			s2f = geofence.NewS2fence(14)
+			for _, tract := range tracts {
+				//fmt.Printf("s2fence adding feature %d\n", i)
+				s2f.Add(tract)
+			}
+			fmt.Println("Loaded s2fence!")
 			break
 		}
 	}

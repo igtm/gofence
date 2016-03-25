@@ -16,11 +16,12 @@ const (
 	BoundingBoxFence = "bbox"
 	CityBruteFence   = "city"
 	CityBoxFence     = "city-bbox"
+	S2Fence          = "s2"
 )
 
 // Just a list of the fence types
 var FenceLabels = []string{
-	RtreeFence, BruteForceFence, QuadTreeFence,
+	RtreeFence, S2Fence, BruteForceFence, QuadTreeFence,
 	QuadRtreeFence, CityBruteFence, CityBoxFence,
 	BoundingBoxFence,
 }
@@ -46,6 +47,8 @@ func GetFence(label string, zoom int) (fence GeoFence, err error) {
 		fence = NewRfence()
 	case BruteForceFence:
 		fence = NewBruteFence()
+	case S2Fence:
+		fence = NewS2fence(zoom)
 	case QuadTreeFence:
 		fence = NewQfence(zoom)
 	case QuadRtreeFence:
