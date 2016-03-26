@@ -137,9 +137,13 @@ func getEngarde(w http.ResponseWriter, r *http.Request, params httprouter.Params
 
 func attachProfiler(router *httprouter.Router) {
 	router.HandlerFunc("GET", "/debug/pprof/", pprof.Index)
+	router.HandlerFunc("POST", "/debug/pprof/", pprof.Index)
 	router.HandlerFunc("GET", "/debug/pprof/cmdline", pprof.Cmdline)
+	router.HandlerFunc("POST", "/debug/pprof/cmdline", pprof.Cmdline)
 	router.HandlerFunc("GET", "/debug/pprof/profile", pprof.Profile)
+	router.HandlerFunc("POST", "/debug/pprof/profile", pprof.Profile)
 	router.HandlerFunc("GET", "/debug/pprof/symbol", pprof.Symbol)
+	router.HandlerFunc("POST", "/debug/pprof/symbol", pprof.Symbol)
 	router.Handler("GET", "/debug/pprof/heap", pprof.Handler("heap"))
 	router.Handler("GET", "/debug/pprof/block", pprof.Handler("block"))
 	router.Handler("GET", "/debug/pprof/goroutine", pprof.Handler("goroutine"))
