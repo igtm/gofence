@@ -26,7 +26,7 @@ func client(args []string) {
 		},
 		cli.IntFlag{
 			Name:  "zoom, z",
-			Value: 18,
+			Value: 14,
 			Usage: "Some fences require a zoom level",
 		},
 		cli.StringFlag{

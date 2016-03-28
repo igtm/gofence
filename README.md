@@ -34,6 +34,7 @@ GLOBAL OPTIONS:
    --fence "rtree"	Type of fence to use rtree|brute|qtree|qrtree|city|city-bbox|bbox
    --zoom, -z "18"	Some fences require a zoom level
    --port, -p "8080"	Port to bind to
+   --profile		Mounts profiling endpoints
    --help, -h		show help
    --version, -v	print the version
 ```
@@ -60,18 +61,20 @@ Search a fence for the query in the post body. This query must be a geojson feat
 
     GET /fence/:name/search?lat=<LAT>&lon=<LON>
 
-Convenience method for search with GET parameters. Both lat and lon and required and must be numbers. Any other parameters in the query string will be treated as properties of the query in the result.
+Convenience method for search with GET parameters. Both lat and lon and required and must be numbers. Any other parameters in the query string will be treated as properties of the query in the result. Will be more performant since json unmarshalling isn't necessary.
 
 ## Micro Benchmarks
 
-| Benchmark           | Operations | Time (ns/op) | Bytes (b/op) | Mallocs (allocs/op) | 
-|---------------------|-----------:|-------------:|-------------:|--------------------:| 
-| BenchmarkBrute-4    |       5000 |       251641 |           19 |                   1 | 
-| BenchmarkCity-4     |      30000 |        39913 |           40 |                   1 | 
-| BenchmarkBbox-4     |      50000 |        37085 |           11 |                   1 | 
-| BenchmarkCityBbox-4 |     200000 |         9484 |           13 |                   1 | 
-| BenchmarkQfence-4   |     300000 |         3959 |          399 |                  18 | 
-| BenchmarkRfence-4   |    1000000 |         2290 |          174 |                   9 | 
+| Benchmark   | Operations | Time (ns/op) | Bytes (b/op) | Mallocs (allocs/op) |
+|-------------|-----------:|-------------:|--------------:|-------------------:|
+| Brute       |      5000  |       389192 |             8 |                  1 |
+| City        |     30000  |        58756 |             8 |                  1 |
+| Bbox        |     30000  |        51795 |             8 |                  1 |
+| CityBbox    |    100000  |        13747 |             8 |                  1 |
+| Qfence Z14  |    300000  |         6454 |           181 |                 18 |
+| Rfence      |    300000  |         5145 |           280 |                 10 |
+| S2fence Z14 |   1000000  |         1403 |             8 |                  1 |
+| S2fence Z16 |   3000000  |          471 |             8 |                  1 | 
 
 ![chart link broken](https://docs.google.com/spreadsheets/d/1PYoxb7nhPA_zrh9oPFnUH0mvo8geYvEkjfe8Jtc0vvY/pubchart?oid=1486005290&format=image)
 
