@@ -89,7 +89,7 @@ func TestFences(t *testing.T) {
 	}
 }
 
-func BenchmarkBrute(b *testing.B) {
+func BenchmarkBruteGet(b *testing.B) {
 	fence := geofence.NewBruteFence()
 	for _, tract := range tracts {
 		fence.Add(tract)
@@ -103,7 +103,7 @@ func BenchmarkBrute(b *testing.B) {
 	}
 }
 
-func BenchmarkCity(b *testing.B) {
+func BenchmarkCityGet(b *testing.B) {
 	fence, err := geofence.NewCityFence()
 	if err != nil {
 		fmt.Printf("Skipping benchmark for 'CityFence' because %s", err)
@@ -121,7 +121,7 @@ func BenchmarkCity(b *testing.B) {
 	}
 }
 
-func BenchmarkBbox(b *testing.B) {
+func BenchmarkBboxGet(b *testing.B) {
 	fence := geofence.NewBboxFence()
 	for _, tract := range tracts {
 		fence.Add(tract)
@@ -135,13 +135,10 @@ func BenchmarkBbox(b *testing.B) {
 	}
 }
 
-func BenchmarkCityBbox(b *testing.B) {
+func BenchmarkCityBboxGet(b *testing.B) {
 	fence, err := geofence.NewCityBboxFence()
 	if err != nil {
 		fmt.Printf("Skipping benchmark for 'CityBboxFence' because %s", err)
-		return
-	}
-	if err != nil {
 		return
 	}
 	for _, tract := range tracts {
@@ -156,7 +153,7 @@ func BenchmarkCityBbox(b *testing.B) {
 	}
 }
 
-func BenchmarkQfence(b *testing.B) {
+func BenchmarkQfenceGet(b *testing.B) {
 	fence := geofence.NewQfence(TEST_ZOOM)
 	for _, tract := range tracts {
 		fence.Add(tract)
@@ -170,7 +167,7 @@ func BenchmarkQfence(b *testing.B) {
 	}
 }
 
-func BenchmarkRfence(b *testing.B) {
+func BenchmarkRfenceGet(b *testing.B) {
 	fence := geofence.NewRfence()
 	for _, tract := range tracts {
 		fence.Add(tract)
@@ -184,13 +181,77 @@ func BenchmarkRfence(b *testing.B) {
 	}
 }
 
-func BenchmarkS2fence(b *testing.B) {
+func BenchmarkS2fenceGet(b *testing.B) {
 	for n := 0; n < b.N; n++ {
 		// interior @ Z18
 		result = s2f.Get(museums["old whitney"])
 		if len(result) != 1 {
 			b.Fatal("Incorrect Get() result")
 		}
+	}
+}
+
+func BenchmarkBruteAdd(b *testing.B) {
+	fence := geofence.NewBruteFence()
+	for n := 0; n < b.N; n++ {
+		tract := tracts[n%len(tracts)]
+		fence.Add(tract)
+	}
+}
+
+func BenchmarkCityAdd(b *testing.B) {
+	fence, err := geofence.NewCityFence()
+	if err != nil {
+		fmt.Printf("Skipping benchmark for 'CityFence' because %s", err)
+		return
+	}
+	for n := 0; n < b.N; n++ {
+		tract := tracts[n%len(tracts)]
+		fence.Add(tract)
+	}
+}
+
+func BenchmarkBboxAdd(b *testing.B) {
+	fence := geofence.NewBboxFence()
+	for n := 0; n < b.N; n++ {
+		tract := tracts[n%len(tracts)]
+		fence.Add(tract)
+	}
+}
+
+func BenchmarkCityBboxAdd(b *testing.B) {
+	fence, err := geofence.NewCityBboxFence()
+	if err != nil {
+		fmt.Printf("Skipping benchmark for 'CityBboxFence' because %s", err)
+		return
+	}
+	for n := 0; n < b.N; n++ {
+		tract := tracts[n%len(tracts)]
+		fence.Add(tract)
+	}
+}
+
+func BenchmarkQfenceAdd(b *testing.B) {
+	fence := geofence.NewQfence(TEST_ZOOM)
+	for n := 0; n < b.N; n++ {
+		tract := tracts[n%len(tracts)]
+		fence.Add(tract)
+	}
+}
+
+func BenchmarkRfenceAdd(b *testing.B) {
+	fence := geofence.NewRfence()
+	for n := 0; n < b.N; n++ {
+		tract := tracts[n%len(tracts)]
+		fence.Add(tract)
+	}
+}
+
+func BenchmarkS2fenceAdd(b *testing.B) {
+	fence := geofence.NewS2fence(TEST_ZOOM)
+	for n := 0; n < b.N; n++ {
+		tract := tracts[n%len(tracts)]
+		fence.Add(tract)
 	}
 }
 
