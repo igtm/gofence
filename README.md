@@ -1,6 +1,6 @@
-# gofence
+# gofence [![Build Status](https://travis-ci.org/buckhx/gofence.svg?branch=master)](https://travis-ci.org/buckhx/gofence)
 
-[![Build Status](https://travis-ci.org/buckhx/gofence.svg?branch=master)](https://travis-ci.org/buckhx/gofence)
+Code used from [this blog post](https://medium.com/@buckhx/unwinding-uber-s-most-efficient-service-406413c5871d) analyzing Uber's "Highest Query Per Second" service
 
 Tool for geofencing with different algorithms for profiling. 
 
