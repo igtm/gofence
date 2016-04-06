@@ -1,8 +1,8 @@
 # gofence [![Build Status](https://travis-ci.org/buckhx/gofence.svg?branch=master)](https://travis-ci.org/buckhx/gofence)
 
-Code used from [Unwinding Uber's Most Efficient Service](https://medium.com/@buckhx/unwinding-uber-s-most-efficient-service-406413c5871d). Give it a read for some context on this repo.
+Code used from [Unwinding Uber's Most Efficient Service](https://medium.com/@buckhx/unwinding-uber-s-most-efficient-service-406413c5871d) to demonstrate the inefficiencies in Uber's "Highest Query Per Second Service" which uses the "City" fence in this demonstration.
 
-Tool for geofencing with different algorithms for profiling. 
+## HTTP geofencing service
 
 ## Installation
 
