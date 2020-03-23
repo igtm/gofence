@@ -1,14 +1,39 @@
-# gofence [![Build Status](https://travis-ci.org/buckhx/gofence.svg?branch=master)](https://travis-ci.org/buckhx/gofence)
-
-Code used from [Unwinding Uber's Most Efficient Service](https://medium.com/@buckhx/unwinding-uber-s-most-efficient-service-406413c5871d) to demonstrate the inefficiencies in Uber's "Highest Query Per Second Service" which uses the "City" fence in this demonstration.
-
 ## HTTP geofencing service
+Forked from https://github.com/buckhx/gofence
 
-## Installation
+## Additional Changes from original
+- remove implementations except rtree
+- support go module
+- add japan.geojson file from https://github.com/dataofjapan/land/blob/master/japan.geojson
 
-```
-// omitting the dot installs to /usr/local/bin
-curl -sSL https://raw.githubusercontent.com/buckhx/gofence/master/scripts/install.py | python - .
+```bash
+# example usage
+$ go build -o output
+$ ./output --p "8899" ./
+
+# call 
+curl "http://localhost:8890/fence/japan/search?lat=35.6599017&lon=139.7169006"
+
+{
+    "query": {
+        "type": "Feature",
+        "properties": {},
+        "geometry": {
+            "type": "Point",
+            "coordinates": [
+                139.7169006,
+                35.6599017
+            ]
+        }
+    },
+    "fences": [
+        {
+            "id": null,
+            "nam": "Tokyo To",
+            "nam_ja": "東京都"
+        }
+    ]
+}
 ```
 
 ## Usage
@@ -31,7 +56,7 @@ COMMANDS:
    help, h	Shows a list of commands or help for one command
    
 GLOBAL OPTIONS:
-   --fence "rtree"	Type of fence to use rtree|brute|qtree|qrtree|city|city-bbox|bbox
+   --fence "rtree"	Type of fence to use rtree
    --zoom, -z "18"	Some fences require a zoom level
    --port, -p "8080"	Port to bind to
    --profile		Mounts profiling endpoints
@@ -62,24 +87,3 @@ Search a fence for the query in the post body. This query must be a geojson feat
     GET /fence/:name/search?lat=<LAT>&lon=<LON>
 
 Convenience method for search with GET parameters. Both lat and lon and required and must be numbers. Any other parameters in the query string will be treated as properties of the query in the result. Will be more performant since json unmarshalling isn't necessary.
-
-## Micro Benchmarks
-
-| Benchmark   | Operations | Time (ns/op) | Bytes (b/op) | Mallocs (allocs/op) |
-|-------------|-----------:|-------------:|--------------:|-------------------:|
-| Brute       |      5000  |       389192 |             8 |                  1 |
-| City        |     30000  |        58756 |             8 |                  1 |
-| Bbox        |     30000  |        51795 |             8 |                  1 |
-| CityBbox    |    100000  |        13747 |             8 |                  1 |
-| Qfence Z14  |    300000  |         6454 |           181 |                 18 |
-| Rfence      |    300000  |         5145 |           280 |                 10 |
-| S2fence Z14 |   1000000  |         1403 |             8 |                  1 |
-| S2fence Z16 |   3000000  |          471 |             8 |                  1 | 
-
-![chart link broken](https://docs.google.com/spreadsheets/d/1PYoxb7nhPA_zrh9oPFnUH0mvo8geYvEkjfe8Jtc0vvY/pubchart?oid=1486005290&format=image)
-
-Benchmarking requires NYC_TRACTS_PATH envvar to be set. Benchmarks are ran by checking which census tract a point is in [code here](lib/fence_test.go)
-
-HTTP profiling is done via https://golang.org/pkg/net/http/pprof/
-
-See https://github.com/buckhx/gofence-profiling for more in depth benmarking.

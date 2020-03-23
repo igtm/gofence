@@ -10,20 +10,11 @@ import (
 
 const (
 	RtreeFence       = "rtree"
-	QuadRtreeFence   = "qrtree"
-	QuadTreeFence    = "qtree"
-	BruteForceFence  = "brute"
-	BoundingBoxFence = "bbox"
-	CityBruteFence   = "city"
-	CityBoxFence     = "city-bbox"
-	S2Fence          = "s2"
 )
 
 // Just a list of the fence types
 var FenceLabels = []string{
-	RtreeFence, S2Fence, BruteForceFence, QuadTreeFence,
-	QuadRtreeFence, CityBruteFence, CityBoxFence,
-	BoundingBoxFence,
+	RtreeFence,
 }
 
 // Interface for algortithms to implement.
@@ -45,20 +36,6 @@ func GetFence(label string, zoom int) (fence GeoFence, err error) {
 	switch label {
 	case RtreeFence:
 		fence = NewRfence()
-	case BruteForceFence:
-		fence = NewBruteFence()
-	case S2Fence:
-		fence = NewS2fence(zoom)
-	case QuadTreeFence:
-		fence = NewQfence(zoom)
-	case QuadRtreeFence:
-		fence = NewQrfence(zoom)
-	case BoundingBoxFence:
-		fence = NewBboxFence()
-	case CityBruteFence:
-		fence, err = NewCityFence()
-	case CityBoxFence:
-		fence, err = NewCityBboxFence()
 	default:
 		err = fmt.Errorf("Bad fence type: %s", label)
 	}

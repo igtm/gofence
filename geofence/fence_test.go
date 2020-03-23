@@ -2,7 +2,6 @@ package geofence_test
 
 import (
 	"bytes"
-	"fmt"
 	"os"
 	"strings"
 	"testing"
@@ -17,7 +16,6 @@ const (
 
 var (
 	ues            *geo.Feature
-	s2f            geofence.GeoFence
 	tracts, result []*geo.Feature
 	museums        = map[string]geo.Coordinate{
 		"guggenheim":      {40.7830, -73.9590},
@@ -89,84 +87,6 @@ func TestFences(t *testing.T) {
 	}
 }
 
-func BenchmarkBruteGet(b *testing.B) {
-	fence := geofence.NewBruteFence()
-	for _, tract := range tracts {
-		fence.Add(tract)
-	}
-	b.ResetTimer()
-	for n := 0; n < b.N; n++ {
-		result = fence.Get(museums["old whitney"])
-		if len(result) != 1 {
-			b.Fatal("Incorrect Get() result")
-		}
-	}
-}
-
-func BenchmarkCityGet(b *testing.B) {
-	fence, err := geofence.NewCityFence()
-	if err != nil {
-		fmt.Printf("Skipping benchmark for 'CityFence' because %s", err)
-		return
-	}
-	for _, tract := range tracts {
-		fence.Add(tract)
-	}
-	b.ResetTimer()
-	for n := 0; n < b.N; n++ {
-		result = fence.Get(museums["old whitney"])
-		if len(result) != 1 {
-			b.Fatal("Incorrect Get() result")
-		}
-	}
-}
-
-func BenchmarkBboxGet(b *testing.B) {
-	fence := geofence.NewBboxFence()
-	for _, tract := range tracts {
-		fence.Add(tract)
-	}
-	b.ResetTimer()
-	for n := 0; n < b.N; n++ {
-		result = fence.Get(museums["old whitney"])
-		if len(result) != 1 {
-			b.Fatal("Incorrect Get() result")
-		}
-	}
-}
-
-func BenchmarkCityBboxGet(b *testing.B) {
-	fence, err := geofence.NewCityBboxFence()
-	if err != nil {
-		fmt.Printf("Skipping benchmark for 'CityBboxFence' because %s", err)
-		return
-	}
-	for _, tract := range tracts {
-		fence.Add(tract)
-	}
-	b.ResetTimer()
-	for n := 0; n < b.N; n++ {
-		result = fence.Get(museums["old whitney"])
-		if len(result) != 1 {
-			b.Fatal("Incorrect Get() result")
-		}
-	}
-}
-
-func BenchmarkQfenceGet(b *testing.B) {
-	fence := geofence.NewQfence(TEST_ZOOM)
-	for _, tract := range tracts {
-		fence.Add(tract)
-	}
-	b.ResetTimer()
-	for n := 0; n < b.N; n++ {
-		result = fence.Get(museums["old whitney"])
-		if len(result) != 1 {
-			b.Fatal("Incorrect Get() result")
-		}
-	}
-}
-
 func BenchmarkRfenceGet(b *testing.B) {
 	fence := geofence.NewRfence()
 	for _, tract := range tracts {
@@ -181,74 +101,8 @@ func BenchmarkRfenceGet(b *testing.B) {
 	}
 }
 
-func BenchmarkS2fenceGet(b *testing.B) {
-	for n := 0; n < b.N; n++ {
-		// interior @ Z18
-		result = s2f.Get(museums["old whitney"])
-		if len(result) != 1 {
-			b.Fatal("Incorrect Get() result")
-		}
-	}
-}
-
-func BenchmarkBruteAdd(b *testing.B) {
-	fence := geofence.NewBruteFence()
-	for n := 0; n < b.N; n++ {
-		tract := tracts[n%len(tracts)]
-		fence.Add(tract)
-	}
-}
-
-func BenchmarkCityAdd(b *testing.B) {
-	fence, err := geofence.NewCityFence()
-	if err != nil {
-		fmt.Printf("Skipping benchmark for 'CityFence' because %s", err)
-		return
-	}
-	for n := 0; n < b.N; n++ {
-		tract := tracts[n%len(tracts)]
-		fence.Add(tract)
-	}
-}
-
-func BenchmarkBboxAdd(b *testing.B) {
-	fence := geofence.NewBboxFence()
-	for n := 0; n < b.N; n++ {
-		tract := tracts[n%len(tracts)]
-		fence.Add(tract)
-	}
-}
-
-func BenchmarkCityBboxAdd(b *testing.B) {
-	fence, err := geofence.NewCityBboxFence()
-	if err != nil {
-		fmt.Printf("Skipping benchmark for 'CityBboxFence' because %s", err)
-		return
-	}
-	for n := 0; n < b.N; n++ {
-		tract := tracts[n%len(tracts)]
-		fence.Add(tract)
-	}
-}
-
-func BenchmarkQfenceAdd(b *testing.B) {
-	fence := geofence.NewQfence(TEST_ZOOM)
-	for n := 0; n < b.N; n++ {
-		tract := tracts[n%len(tracts)]
-		fence.Add(tract)
-	}
-}
-
 func BenchmarkRfenceAdd(b *testing.B) {
 	fence := geofence.NewRfence()
-	for n := 0; n < b.N; n++ {
-		tract := tracts[n%len(tracts)]
-		fence.Add(tract)
-	}
-}
-
-func BenchmarkS2fenceAdd(b *testing.B) {
-	fence := geofence.NewS2fence(TEST_ZOOM)
 	for n := 0; n < b.N; n++ {
 		tract := tracts[n%len(tracts)]
 		fence.Add(tract)
@@ -268,13 +122,6 @@ func TestMain(m *testing.M) {
 				panic(err)
 			}
 			tracts = features
-			fmt.Println("Loading s2fence...")
-			s2f = geofence.NewS2fence(TEST_ZOOM)
-			for _, tract := range tracts {
-				//fmt.Printf("s2fence adding feature %d\n", i)
-				s2f.Add(tract)
-			}
-			fmt.Println("Loaded s2fence!")
 			break
 		}
 	}
