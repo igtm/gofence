@@ -8,8 +8,6 @@ github.com/codegangsta/cli v1.13.1-0.20160320204403-a7936f1d21fd h1:VWR18kZpdXvh
 github.com/codegangsta/cli v1.13.1-0.20160320204403-a7936f1d21fd/go.mod h1:/qJNoX69yVSKu5o4jLyXAENLRyk1uhi7zkbQ3slBdOA=
 github.com/deckarep/golang-set v0.0.0-20160220235750-1f0f4ff8d3fb h1:Y7ICBPPSDvbtoz39GfH3nrQHpfC5CeqBWBBRebPazRw=
 github.com/deckarep/golang-set v0.0.0-20160220235750-1f0f4ff8d3fb/go.mod h1:93vsz/8Wt4joVM7c2AVqh+YRMiUSc14yDtF28KmMOgQ=
-github.com/golang/geo v0.0.0-20160212030431-1e8d2b4605df h1:8eqQ+cRD32H/zS760Dh9u5LE/NvjKsJO2OHBwLTntfg=
-github.com/golang/geo v0.0.0-20160212030431-1e8d2b4605df/go.mod h1:vgWZ7cu0fq0KY3PpEHsocXOWJpRtkcbKemU4IUw0M60=
 github.com/julienschmidt/httprouter v1.1.1-0.20160219154026-77366a47451a h1:sC2eLu5WwJ6Txhf+7DHZbdOu69izaeF2lh9YCQ6Bl8Y=
 github.com/julienschmidt/httprouter v1.1.1-0.20160219154026-77366a47451a/go.mod h1:SYymIcj16QtmaHHD7aYtjjsJG7VTCxuUUipMqKk8s4w=
 github.com/kpawlik/geojson v0.0.0-20150803062208-06aeea8c5561 h1:xYuHLD4F5o2SJlf2E8tRp0Ml/liOWcRSukMJRF5hneM=
