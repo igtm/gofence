@@ -1,7 +1,7 @@
 package geofence
 
 import (
-	"github.com/buckhx/diglet/geo"
+	"github.com/igtm/diglet/geo"
 )
 
 // Standard rtree with M=50

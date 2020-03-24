@@ -6,7 +6,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/buckhx/diglet/geo"
+	"github.com/igtm/diglet/geo"
 	"github.com/igtm/gofence/geofence"
 )
 

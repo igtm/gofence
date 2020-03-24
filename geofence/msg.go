@@ -5,7 +5,7 @@ import (
 	"errors"
 	"io"
 
-	"github.com/buckhx/diglet/geo"
+	"github.com/igtm/diglet/geo"
 )
 
 //go:generate ffjson msg.go

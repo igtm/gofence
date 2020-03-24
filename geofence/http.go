@@ -9,7 +9,7 @@ import (
 	"net/http/pprof"
 	"strconv"
 
-	"github.com/buckhx/diglet/geo"
+	"github.com/igtm/diglet/geo"
 	"github.com/julienschmidt/httprouter"
 )
 

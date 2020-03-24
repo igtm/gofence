@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 	"sync"
 
-	"github.com/buckhx/diglet/geo"
+	"github.com/igtm/diglet/geo"
 )
 
 //FenceIndex is a dictionary of multiple fences. Useful if you have multiple data sets that need to be searched

@@ -9,7 +9,7 @@ import (
 	"io"
 	"sync"
 
-	"github.com/buckhx/diglet/geo"
+	"github.com/igtm/diglet/geo"
 )
 
 func execute(in io.Reader, fence GeoFence, w int) *sync.WaitGroup {

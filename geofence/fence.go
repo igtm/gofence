@@ -5,7 +5,7 @@ package geofence
 import (
 	"fmt"
 
-	"github.com/buckhx/diglet/geo"
+	"github.com/igtm/diglet/geo"
 )
 
 const (
