@@ -7,7 +7,7 @@ import (
 	"testing"
 
 	"github.com/buckhx/diglet/geo"
-	"github.com/buckhx/gofence/geofence"
+	"github.com/igtm/gofence/geofence"
 )
 
 const (
